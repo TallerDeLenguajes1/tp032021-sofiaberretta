@@ -7,5 +7,14 @@ namespace Cadeteria.Models
 {
     public class Cadeteria
     {
+        private string nombre;
+        public List<Cadete> Cadetes;
+        public List<Pedidos> Pedidos;
+
+        public Cadeteria()
+        {
+            Cadetes = new List<Cadete>();
+            Pedidos = new List<Pedidos>();
+        }
     }
 }
