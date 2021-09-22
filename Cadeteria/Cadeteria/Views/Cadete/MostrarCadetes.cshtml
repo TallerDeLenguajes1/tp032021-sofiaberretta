@@ -1,5 +1,32 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@{
+    ViewData["Title"] = "Listado Cadetes";
 }
+
+@model List<Cadete>
+
+<h1 class="display-4">Listado de Cadetes</h1>
+<div class="col-12">
+    <a asp-controller="Cadete" asp-action="Index" class="btn btn-primary">Crear nuevo Cadete</a>
+</div>
+
+<table class="table">
+    <thead>
+        <tr class="table-primary">
+            <th scope="col">ID</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Direccion</th>
+            <th scope="col">Telefono</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var item in Model)
+         {
+            <tr>
+                <th scope="row" class="table-primary">@item.Id</th>
+                <td>@item.Nombre</td>
+                <td>@item.Direccion</td>
+                <td>@item.Telefono</td>
+            </tr>
+         }
+    </tbody>
+</table>

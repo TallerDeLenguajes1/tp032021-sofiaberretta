@@ -1,6 +1,7 @@
 ﻿using Cadeteria.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -12,10 +13,12 @@ namespace Cadeteria.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly Logger nlog;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, Logger nlog)
         {
             _logger = logger;
+            this.nlog = nlog;
         }
 
         public IActionResult Index()

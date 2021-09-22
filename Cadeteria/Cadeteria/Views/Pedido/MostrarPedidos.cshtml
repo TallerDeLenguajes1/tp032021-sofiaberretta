@@ -1,5 +1,34 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@{
+    ViewData["Title"] = "Listado Pedidos";
 }
+@model List<Pedidos>
+
+<h1 class="display-4">Listado de Pedidos</h1>
+
+<table class="table">
+    <thead>
+        <tr class="table-success">
+            <th scope="col">N Pedido</th>
+            <th scope="col">Observaciones</th>
+            <th scope="col">Estado</th>
+            <th scope="col">ID Cliente</th>
+            <th scope="col">Nombre Cliente</th>
+            <th scope="col">Direccion Cliente</th>
+            <th scope="col">Telefono Cliente</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <th scope="row" class="table-success">@item.NumeroPedido</th>
+            <td>@item.Observaciones</td>
+            <td>@item.Estado</td>
+            <td>@item.Cliente.Id</td>
+            <td>@item.Cliente.Nombre</td>
+            <td>@item.Cliente.Direccion</td>
+            <td>@item.Cliente.Telefono</td>
+        </tr>
+        }
+    </tbody>
+</table>

@@ -12,6 +12,7 @@ namespace Cadeteria.Controllers
     {
         static int numPedido = 100;
         private readonly ILogger<PedidoController> _logger;
+        static Models.Cadeteria cadeteria = new Models.Cadeteria();
         public PedidoController(ILogger<PedidoController> logger)
         {
             _logger = logger;
@@ -30,8 +31,8 @@ namespace Cadeteria.Controllers
         {
             Pedidos nuevoPedido = new Pedidos(numPedido, obs, idC, nombreC, direcC, telC, estado);
             numPedido++;
-            //falta anadir el pedido a la lista de pedidos
-            return View("MostrarPedidos");
+            cadeteria.ListaPedidos.Add(nuevoPedido);
+            return View("MostrarPedidos", cadeteria.ListaPedidos);
         }
     }
 }

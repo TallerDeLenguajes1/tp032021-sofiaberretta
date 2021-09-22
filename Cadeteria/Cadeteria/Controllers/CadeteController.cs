@@ -10,8 +10,9 @@ namespace Cadeteria.Controllers
 {
     public class CadeteController : Controller
     {
-        static int id = 0;
+        static int id = 1;
         private readonly ILogger<CadeteController> _logger;
+        static Models.Cadeteria cadeteria = new Models.Cadeteria();
         public CadeteController(ILogger<CadeteController> logger)
         {
             _logger = logger;
@@ -30,8 +31,8 @@ namespace Cadeteria.Controllers
         { 
             Cadete nuevoCadete = new Cadete(id, nombre, direc, tel);
             id++;
-            //falta anadir el cadete a la lista de cadetes
-            return View("MostrarCadetes");
+            cadeteria.ListaCadetes.Add(nuevoCadete);
+            return View("MostrarCadetes", cadeteria.ListaCadetes);
         }
     }
 }

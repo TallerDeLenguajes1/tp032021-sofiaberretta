@@ -8,13 +8,13 @@ namespace Cadeteria.Models
     public class Cadeteria
     {
         private string nombre;
-        public List<Cadete> Cadetes;
-        public List<Pedidos> Pedidos;
+        public List<Cadete> ListaCadetes;
+        public List<Pedidos> ListaPedidos;
 
         public Cadeteria()
         {
-            Cadetes = new List<Cadete>();
-            Pedidos = new List<Pedidos>();
+            ListaCadetes = new List<Cadete>();
+            ListaPedidos = new List<Pedidos>();
         }
     }
 }
