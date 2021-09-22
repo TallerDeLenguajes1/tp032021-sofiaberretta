@@ -12,10 +12,11 @@ namespace Cadeteria.Controllers
     {
         static int numPedido = 100;
         private readonly ILogger<PedidoController> _logger;
-        static Models.Cadeteria cadeteria = new Models.Cadeteria();
-        public PedidoController(ILogger<PedidoController> logger)
+        private readonly DBTemporal _DB;
+        public PedidoController(ILogger<PedidoController> logger, DBTemporal DB)
         {
             _logger = logger;
+            _DB = DB;
         }
         public IActionResult Index()
         {
@@ -24,15 +25,15 @@ namespace Cadeteria.Controllers
 
         public IActionResult MostrarPedidos()
         {
-            return View();
+            return View(_DB.Cadeteria.ListaPedidos);
         }
 
         public IActionResult crearPedido(string obs, string estado, string nombreC, string idC, string direcC, string telC)
         {
             Pedidos nuevoPedido = new Pedidos(numPedido, obs, idC, nombreC, direcC, telC, estado);
             numPedido++;
-            cadeteria.ListaPedidos.Add(nuevoPedido);
-            return View("MostrarPedidos", cadeteria.ListaPedidos);
+            _DB.Cadeteria.ListaPedidos.Add(nuevoPedido);
+            return View("MostrarPedidos", _DB.Cadeteria.ListaPedidos);
         }
     }
 }

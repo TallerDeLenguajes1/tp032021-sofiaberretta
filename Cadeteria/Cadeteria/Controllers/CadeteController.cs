@@ -12,10 +12,11 @@ namespace Cadeteria.Controllers
     {
         static int id = 1;
         private readonly ILogger<CadeteController> _logger;
-        static Models.Cadeteria cadeteria = new Models.Cadeteria();
-        public CadeteController(ILogger<CadeteController> logger)
+        private readonly DBTemporal _DB;
+        public CadeteController(ILogger<CadeteController> logger, DBTemporal DB)
         {
             _logger = logger;
+            _DB = DB;
         }
         public IActionResult Index()
         {
@@ -24,15 +25,15 @@ namespace Cadeteria.Controllers
 
         public IActionResult MostrarCadetes()
         {
-            return View();
+            return View(_DB.Cadeteria.ListaCadetes);
         }
 
         public IActionResult crearCadete(string nombre, string direc, string tel)
         { 
             Cadete nuevoCadete = new Cadete(id, nombre, direc, tel);
             id++;
-            cadeteria.ListaCadetes.Add(nuevoCadete);
-            return View("MostrarCadetes", cadeteria.ListaCadetes);
+            _DB.Cadeteria.ListaCadetes.Add(nuevoCadete);
+            return View("MostrarCadetes", _DB.Cadeteria.ListaCadetes);
         }
     }
 }

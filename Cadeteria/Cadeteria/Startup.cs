@@ -9,11 +9,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using NLog;
+using Cadeteria.Models;
 
 namespace Cadeteria
 {
     public class Startup
     {
+        static DBTemporal DB = new DBTemporal();
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -26,6 +28,7 @@ namespace Cadeteria
         {
             services.AddSingleton(NLog.LogManager.GetCurrentClassLogger());
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
+            services.AddSingleton(DB);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
