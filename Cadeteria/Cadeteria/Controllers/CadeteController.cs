@@ -33,6 +33,7 @@ namespace Cadeteria.Controllers
             Cadete nuevoCadete = new Cadete(id, nombre, direc, tel);
             id++;
             _DB.Cadeteria.ListaCadetes.Add(nuevoCadete);
+            _DB.GuardarCadete(_DB.Cadeteria.ListaCadetes);
             return View("MostrarCadetes", _DB.Cadeteria.ListaCadetes);
         }
     }
