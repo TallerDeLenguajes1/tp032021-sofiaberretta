@@ -1,7 +1,7 @@
 ﻿@{
     ViewData["Title"] = "Listado Pedidos";
 }
-@model List<Pedidos>
+@model Cadeteria
 
 <h1 class="display-4">Listado de Pedidos</h1>
 <div class="col-12">
@@ -18,10 +18,11 @@
             <th scope="col">Nombre Cliente</th>
             <th scope="col">Direccion Cliente</th>
             <th scope="col">Telefono Cliente</th>
+            <th scope="col">Cadete a cargo</th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
+        @foreach (var item in Model.ListaPedidos)
         {
         <tr>
             <th scope="row" class="table-success">@item.NumeroPedido</th>
@@ -31,6 +32,26 @@
             <td>@item.Cliente.Nombre</td>
             <td>@item.Cliente.Direccion</td>
             <td>@item.Cliente.Telefono</td>
+            <td>
+                <form class="table" asp-action="AsignarCadete" asp-controller="Pedido" method="post">
+                    <input type="hidden" id="idPedido" name="idPedido" value="@item.NumeroPedido">
+                    <select class="form-select" name="idCadete">
+                        <option selected value="0">Sin Cadete</option>
+                        @foreach (var cadete in Model.ListaCadetes)
+                        {
+                            if (cadete.ListadoPedidos.Exists(a => a.NumeroPedido == item.NumeroPedido))
+                            {
+                                <option selected value="@cadete.Id">@cadete.Nombre (@cadete.ListadoPedidos.Count())</option>
+                            }
+                            else
+                            {
+                                <option value="@cadete.Id">@cadete.Nombre (@cadete.ListadoPedidos.Count())</option>
+                            }
+                        }
+                    </select>
+                    <button type="submit" class="btn btn-sm btn-success">Asignar</button>
+                </form>
+             </td>
         </tr>
         }
     </tbody>

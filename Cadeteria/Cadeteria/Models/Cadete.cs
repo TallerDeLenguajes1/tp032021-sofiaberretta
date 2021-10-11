@@ -22,6 +22,11 @@ namespace Cadeteria.Models
             ListadoPedidos = new List<Pedidos>();
         }
 
+        public Cadete() 
+        { 
+        
+        }
+
         public int Id { get => id; set => id = value; }
         public string Nombre { get => nombre; set => nombre = value; }
         public string Direccion { get => direccion; set => direccion = value; }

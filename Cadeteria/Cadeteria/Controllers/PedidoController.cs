@@ -25,7 +25,7 @@ namespace Cadeteria.Controllers
 
         public IActionResult MostrarPedidos()
         {
-            return View(_DB.Cadeteria.ListaPedidos);
+            return View(_DB.Cadeteria);
         }
 
         public IActionResult crearPedido(string obs, string estado, string nombreC, string idC, string direcC, string telC)
@@ -33,7 +33,28 @@ namespace Cadeteria.Controllers
             Pedidos nuevoPedido = new Pedidos(numPedido, obs, idC, nombreC, direcC, telC, estado);
             numPedido++;
             _DB.Cadeteria.ListaPedidos.Add(nuevoPedido);
-            return View("MostrarPedidos", _DB.Cadeteria.ListaPedidos);
+            return View("MostrarPedidos", _DB.Cadeteria);
+        }
+
+        public IActionResult AsignarCadete(int idPedido, int idCadete)
+        {
+            QuitarPedidoDeCadete(idPedido);
+
+            if (idCadete != 0)
+            {
+                Cadete cadete = _DB.Cadeteria.ListaCadetes.Where(a => a.Id == idCadete).First();
+                Pedidos pedido = _DB.Cadeteria.ListaPedidos.Where(b => b.NumeroPedido == idPedido).First();
+                cadete.ListadoPedidos.Add(pedido);
+            }
+
+            return View("MostrarPedidos", _DB.Cadeteria);
+        }
+
+        private void QuitarPedidoDeCadete(int idPedido)
+        {
+            Pedidos pedido = _DB.Cadeteria.ListaPedidos.Find(x => x.NumeroPedido == idPedido);
+            _DB.Cadeteria.ListaCadetes.ForEach(cadete => cadete.ListadoPedidos.Remove(pedido));
+
         }
     }
 }

@@ -47,7 +47,7 @@ namespace Cadeteria.Models
             List<Cadete> cadetesJson = null;
             try
             {
-                string ubicacion = "@Cadetes";
+                string ubicacion = @"Cadetes";
 
                 if(File.Exists(ubicacion))
                 {
