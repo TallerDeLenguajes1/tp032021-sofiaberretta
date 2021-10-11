@@ -1,1 +1,1 @@
-[{"Id":1,"Nombre":"Sofia","Direccion":"San Juan 123","Telefono":"414555656","ListadoPedidos":[]},{"Id":2,"Nombre":"Martin","Direccion":"San Martin 123","Telefono":"236514541","ListadoPedidos":[]}]
+[{"Id":1,"Nombre":"Sofia","Direccion":"San Juan 123","Telefono":"414555656","ListadoPedidos":[]},{"Id":2,"Nombre":"Martin","Direccion":"San Martin 1500","Telefono":"236514541","ListadoPedidos":[]},{"Id":3,"Nombre":"Lucas","Direccion":"Las Heras 856","Telefono":"545454616","ListadoPedidos":[]}]

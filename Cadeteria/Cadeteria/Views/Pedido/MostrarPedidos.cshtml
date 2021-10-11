@@ -51,7 +51,13 @@
                     </select>
                     <button type="submit" class="btn btn-sm btn-success">Asignar</button>
                 </form>
-             </td>
+            </td>
+            <td>
+                <a class="nav-link" asp-route-id="@item.NumeroPedido" asp-action="ModificarPedido">Modificar</a>
+                <a class="nav-link" asp-route-id="@item.NumeroPedido" asp-action="EliminarPedido" onclick="return confirm('¿Seguro que desea eliminar este pedido?')">
+                    Eliminar
+                </a>
+            </td>
         </tr>
         }
     </tbody>
