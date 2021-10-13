@@ -10,7 +10,7 @@ namespace Cadeteria.Models
     public class DBTemporal
     {
         private Cadeteria cadeteria;
-        string ubicacionCadetes = @"Cadetes";
+        string ubicacionCadetes = @"Cadetes.json";
         public DBTemporal()
         {
             Cadeteria = new Cadeteria();
@@ -92,7 +92,6 @@ namespace Cadeteria.Models
 
                 if (cadeteSeleccionado != null)
                 {
-
                     cadeteSeleccionado.Nombre = cadete.Nombre;
                     cadeteSeleccionado.Direccion = cadete.Direccion;
                     cadeteSeleccionado.Telefono = cadete.Telefono;

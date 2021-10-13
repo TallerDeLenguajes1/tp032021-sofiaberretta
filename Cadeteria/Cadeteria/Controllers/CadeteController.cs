@@ -80,18 +80,9 @@ namespace Cadeteria.Controllers
 
         public IActionResult cambiarDatosCadete(int id, string nombre, string direc, string tel)
         {
-            Cadete cadeteAModificar = null;
-            for (int i = 0; i < _DB.Cadeteria.ListaCadetes.Count(); i++)
+            if (id > 0)
             {
-                if (_DB.Cadeteria.ListaCadetes[i].Id == id)
-                {
-                    cadeteAModificar = _DB.Cadeteria.ListaCadetes[i];
-                    break;
-                }
-            }
-
-            if (cadeteAModificar != null)
-            {
+                Cadete cadeteAModificar = new Cadete();
                 cadeteAModificar.Nombre = nombre;
                 cadeteAModificar.Direccion = direc;
                 cadeteAModificar.Telefono = tel;
