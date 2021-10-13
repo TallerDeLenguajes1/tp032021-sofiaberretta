@@ -10,7 +10,7 @@ namespace Cadeteria.Models
     public class DBTemporal
     {
         private Cadeteria cadeteria;
-
+        string ubicacionCadetes = @"Cadetes";
         public DBTemporal()
         {
             Cadeteria = new Cadeteria();
@@ -24,9 +24,8 @@ namespace Cadeteria.Models
         {
             try
             {
-                string ubicacion = @"Cadetes";
                 string cadetesJson = JsonSerializer.Serialize(cadetes);
-                using(FileStream miArchivo = new FileStream(ubicacion, FileMode.Create))
+                using(FileStream miArchivo = new FileStream(ubicacionCadetes, FileMode.Create))
                 {
                     using(StreamWriter strWrite = new StreamWriter(miArchivo))
                     {
@@ -47,11 +46,9 @@ namespace Cadeteria.Models
             List<Cadete> cadetesJson = null;
             try
             {
-                string ubicacion = @"Cadetes";
-
-                if(File.Exists(ubicacion))
+                if(File.Exists(ubicacionCadetes))
                 {
-                    using(FileStream miArchivo = new FileStream(ubicacion, FileMode.Open))
+                    using(FileStream miArchivo = new FileStream(ubicacionCadetes, FileMode.Open))
                     {
                         using(StreamReader strReader = new StreamReader(miArchivo))
                         {
@@ -101,18 +98,6 @@ namespace Cadeteria.Models
                     cadeteSeleccionado.Telefono = cadete.Telefono;
 
                     GuardarCadete(listaCadetes);
-
-                    /*
-                    FileStream archivoCadete = new FileStream(rutaArchivo, FileMode.Create);
-                    StreamWriter escribirCadete = new StreamWriter(archivoCadete);
-
-                    string strJson = JsonSerializer.Serialize(listaCadetes);
-                    escribirCadete.WriteLine("{0}", strJson);
-
-                    escribirCadete.Close();
-
-                    string mensaje = "LOS DATOS DEL CADETE " + cadeteSeleccionado.Id + " SE MODIFICARON CORRECTAMENTE";
-                    _logger.Info(mensaje);*/
                 }
             }
             catch (Exception ex)
