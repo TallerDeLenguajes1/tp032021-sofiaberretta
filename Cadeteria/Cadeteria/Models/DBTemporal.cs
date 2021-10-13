@@ -11,14 +11,22 @@ namespace Cadeteria.Models
     {
         private Cadeteria cadeteria;
         string ubicacionCadetes = @"Cadetes.json";
+        string ubicacionPedidos = @"Pedidos.json";
         public DBTemporal()
         {
             Cadeteria = new Cadeteria();
-            if(getListCadetes() != null)
+            if(GetListCadetes() != null)
             {
-                Cadeteria.ListaCadetes = getListCadetes();
+                Cadeteria.ListaCadetes = GetListCadetes();
+            }
+
+            if (GetListPedidos() != null)
+            {
+                Cadeteria.ListaPedidos = GetListPedidos();
             }
         }
+
+        //------------------------ CADETES ------------------------
 
         public void GuardarCadete(List<Cadete> cadetes)
         {
@@ -41,7 +49,7 @@ namespace Cadeteria.Models
             }
         }
 
-        public List<Cadete> getListCadetes()
+        public List<Cadete> GetListCadetes()
         {
             List<Cadete> cadetesJson = null;
             try
@@ -68,7 +76,7 @@ namespace Cadeteria.Models
         {
             try
             {
-                List<Cadete> listaDeCadetes = getListCadetes();
+                List<Cadete> listaDeCadetes = GetListCadetes();
 
                 Cadete cadeteAEliminar = listaDeCadetes.Where(cadete => cadete.Id == id).Single();
                 listaDeCadetes.Remove(cadeteAEliminar);
@@ -86,7 +94,7 @@ namespace Cadeteria.Models
         {
             try
             {
-                List<Cadete> listaCadetes = getListCadetes();
+                List<Cadete> listaCadetes = GetListCadetes();
 
                 Cadete cadeteSeleccionado = listaCadetes.Where(cad => cad.Id == cadete.Id).Single();
 
@@ -106,22 +114,68 @@ namespace Cadeteria.Models
         }
 
         //------------------------ PEDIDOS ------------------------
-        /*
+        
+         public void GuardarPedido(List<Pedidos> pedidos)
+        {
+            try
+            {
+                string pedidosJson = JsonSerializer.Serialize(pedidos);
+                using(FileStream miArchivo = new FileStream(ubicacionPedidos, FileMode.Create))
+                {
+                    using(StreamWriter strWrite = new StreamWriter(miArchivo))
+                    {
+                        strWrite.Write(pedidosJson);
+                        strWrite.Close();
+                        strWrite.Dispose();
+                    }
+                }
+
+            } catch (Exception ex)
+            {
+                string error = ex.Message;
+            }
+        }
+
+        public List<Pedidos> GetListPedidos()
+        {
+            List<Pedidos> pedidosJson = null;
+            try
+            {
+                if(File.Exists(ubicacionPedidos))
+                {
+                    using(FileStream miArchivo = new FileStream(ubicacionPedidos, FileMode.Open))
+                    {
+                        using(StreamReader strReader = new StreamReader(miArchivo))
+                        {
+                            string strPedidos = strReader.ReadToEnd();
+                            pedidosJson = JsonSerializer.Deserialize<List<Pedidos>>(strPedidos);
+                        }
+                    }
+                }
+            } catch(Exception ex)
+            {
+                string error = ex.Message;
+            }
+            return pedidosJson;
+        }
         public void ModificarPedido(Pedidos pedido)
         {
             try
             {
-                List<Pedidos> listaPedidos = getListCadetes();
+                List<Pedidos> listaPedidos = GetListPedidos();
 
-                Cadete cadeteSeleccionado = listaCadetes.Where(cad => cad.Id == cadete.Id).Single();
+                Pedidos pedidoSeleccionado = listaPedidos.Where(ped => ped.NumeroPedido == pedido.NumeroPedido).Single();
 
-                if (cadeteSeleccionado != null)
+                if (pedidoSeleccionado != null)
                 {
-                    cadeteSeleccionado.Nombre = cadete.Nombre;
-                    cadeteSeleccionado.Direccion = cadete.Direccion;
-                    cadeteSeleccionado.Telefono = cadete.Telefono;
+                    pedidoSeleccionado.Observaciones = pedido.Observaciones;
+                    pedidoSeleccionado.Estado = pedido.Estado;
+                    pedidoSeleccionado.Cliente.Nombre = pedido.Cliente.Nombre;
+                    pedidoSeleccionado.Cliente.Id = pedido.Cliente.Id;
+                    pedidoSeleccionado.Cliente.Direccion = pedido.Cliente.Direccion;
+                    pedidoSeleccionado.Cliente.Telefono = pedido.Cliente.Telefono;
 
-                    GuardarCadete(listaCadetes);
+                    GuardarPedido(listaPedidos);
                 }
             }
             catch (Exception ex)
@@ -129,7 +183,6 @@ namespace Cadeteria.Models
                 string error = ex.Message;
             }
         }
-        */
 
         public Cadeteria Cadeteria { get => cadeteria; set => cadeteria = value; }
     }

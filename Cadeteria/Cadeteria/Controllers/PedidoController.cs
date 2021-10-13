@@ -37,6 +37,7 @@ namespace Cadeteria.Controllers
             ultimoNum++;
             Pedidos nuevoPedido = new Pedidos(ultimoNum, obs, idC, nombreC, direcC, telC, estado);
             _DB.Cadeteria.ListaPedidos.Add(nuevoPedido);
+            _DB.GuardarPedido(_DB.Cadeteria.ListaPedidos);
             return View("MostrarPedidos", _DB.Cadeteria);
         }
 
@@ -61,7 +62,7 @@ namespace Cadeteria.Controllers
 
         }
 
-        public IActionResult eliminarPedido(int numPedido)
+        public IActionResult eliminarPedido(int numPedido)//PROBLEMA: llega en 0
         {
             for (int i = 0; i < _DB.Cadeteria.ListaPedidos.Count(); i++)
             {
@@ -76,7 +77,7 @@ namespace Cadeteria.Controllers
             return View("MostrarPedidos");
         }
 
-        public IActionResult modificarPedido(int numPedido)
+        public IActionResult modificarPedido(int numPedido)//PROBLEMA: llega en 0
         {
             Pedidos pedidoAModificar = null;
             for (int i = 0; i < _DB.Cadeteria.ListaPedidos.Count(); i++)
