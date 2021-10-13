@@ -10,7 +10,6 @@ namespace Cadeteria.Controllers
 {
     public class PedidoController : Controller
     {
-        static int numPedido = 100;
         private readonly ILogger<PedidoController> _logger;
         private readonly DBTemporal _DB;
         public PedidoController(ILogger<PedidoController> logger, DBTemporal DB)
@@ -30,8 +29,13 @@ namespace Cadeteria.Controllers
 
         public IActionResult crearPedido(string obs, string estado, string nombreC, string idC, string direcC, string telC)
         {
-            Pedidos nuevoPedido = new Pedidos(numPedido, obs, idC, nombreC, direcC, telC, estado);
-            numPedido++;
+            int ultimoNum = 100;
+            if (_DB.Cadeteria.ListaPedidos.Count() > 0)
+            {
+                ultimoNum = _DB.Cadeteria.ListaPedidos.Max(x => x.NumeroPedido);
+            }
+            ultimoNum++;
+            Pedidos nuevoPedido = new Pedidos(ultimoNum, obs, idC, nombreC, direcC, telC, estado);
             _DB.Cadeteria.ListaPedidos.Add(nuevoPedido);
             return View("MostrarPedidos", _DB.Cadeteria);
         }
@@ -55,6 +59,64 @@ namespace Cadeteria.Controllers
             Pedidos pedido = _DB.Cadeteria.ListaPedidos.Find(x => x.NumeroPedido == idPedido);
             _DB.Cadeteria.ListaCadetes.ForEach(cadete => cadete.ListadoPedidos.Remove(pedido));
 
+        }
+
+        public IActionResult eliminarPedido(int numPedido)
+        {
+            for (int i = 0; i < _DB.Cadeteria.ListaPedidos.Count(); i++)
+            {
+                if (_DB.Cadeteria.ListaPedidos[i].NumeroPedido == numPedido)
+                {
+                    _DB.Cadeteria.ListaPedidos.Remove(_DB.Cadeteria.ListaPedidos[i]);
+                    //_DB.BorrarPedido(numPedido);
+                    break;
+                }
+            }
+
+            return View("MostrarPedidos");
+        }
+
+        public IActionResult modificarPedido(int numPedido)
+        {
+            Pedidos pedidoAModificar = null;
+            for (int i = 0; i < _DB.Cadeteria.ListaPedidos.Count(); i++)
+            {
+                if (_DB.Cadeteria.ListaPedidos[i].NumeroPedido == numPedido)
+                {
+                    pedidoAModificar = _DB.Cadeteria.ListaPedidos[i];
+                    break;
+                }
+            }
+
+            if (pedidoAModificar != null)
+            {
+                return View("ModificarPedido", pedidoAModificar);
+            }
+            else
+            {
+                return View("MostrarPedidos");
+            }
+        }
+
+        public IActionResult cambiarDatosPedido(int numPedido, string obs, string estado, string nombreC, string idC, string direcC, string telC)
+        {
+            if (numPedido > 0)
+            {
+                Pedidos pedidoAModificar = new Pedidos();
+                pedidoAModificar.Observaciones = obs;
+                pedidoAModificar.Estado = estado;
+                pedidoAModificar.Cliente.Nombre = nombreC;
+                pedidoAModificar.Cliente.Id = idC;
+                pedidoAModificar.Cliente.Direccion = direcC;
+                pedidoAModificar.Cliente.Telefono = telC;
+
+                //_DB.ModificarPedido(pedidoAModificar);
+                return View("MostrarPedidos");
+            }
+            else
+            {
+                return View("MostrarPedidos");
+            }
         }
     }
 }

@@ -20,6 +20,10 @@ namespace Cadeteria.Models
             this.estado = estado;
         }
 
+        public Pedidos()
+        {
+
+        }
 
         public int NumeroPedido { get => numeroPedido; set => numeroPedido = value; }
         public string Observaciones { get => observaciones; set => observaciones = value; }

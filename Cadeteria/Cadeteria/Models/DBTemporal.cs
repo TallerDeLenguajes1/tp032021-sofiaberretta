@@ -105,6 +105,32 @@ namespace Cadeteria.Models
             }
         }
 
+        //------------------------ PEDIDOS ------------------------
+        /*
+        public void ModificarPedido(Pedidos pedido)
+        {
+            try
+            {
+                List<Pedidos> listaPedidos = getListCadetes();
+
+                Cadete cadeteSeleccionado = listaCadetes.Where(cad => cad.Id == cadete.Id).Single();
+
+                if (cadeteSeleccionado != null)
+                {
+                    cadeteSeleccionado.Nombre = cadete.Nombre;
+                    cadeteSeleccionado.Direccion = cadete.Direccion;
+                    cadeteSeleccionado.Telefono = cadete.Telefono;
+
+                    GuardarCadete(listaCadetes);
+                }
+            }
+            catch (Exception ex)
+            {
+                string error = ex.Message;
+            }
+        }
+        */
+
         public Cadeteria Cadeteria { get => cadeteria; set => cadeteria = value; }
     }
 }

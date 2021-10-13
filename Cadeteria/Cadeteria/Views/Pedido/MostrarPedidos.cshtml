@@ -53,8 +53,8 @@
                 </form>
             </td>
             <td>
-                <a class="nav-link" asp-route-id="@item.NumeroPedido" asp-action="ModificarPedido">Modificar</a>
-                <a class="nav-link" asp-route-id="@item.NumeroPedido" asp-action="EliminarPedido" onclick="return confirm('¿Seguro que desea eliminar este pedido?')">
+                <a class="nav-link" asp-route-id="@item.NumeroPedido" asp-controller="Pedido" asp-action="modificarPedido">Modificar</a>
+                <a class="nav-link" asp-route-id="@item.NumeroPedido" asp-controller="Pedido" asp-action="eliminarPedido" onclick="return confirm('¿Seguro que desea eliminar este pedido?')">
                     Eliminar
                 </a>
             </td>
