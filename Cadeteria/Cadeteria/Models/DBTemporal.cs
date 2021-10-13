@@ -26,7 +26,7 @@ namespace Cadeteria.Models
             {
                 string ubicacion = @"Cadetes";
                 string cadetesJson = JsonSerializer.Serialize(cadetes);
-                using(FileStream miArchivo = new FileStream(ubicacion, FileMode.OpenOrCreate))
+                using(FileStream miArchivo = new FileStream(ubicacion, FileMode.Create))
                 {
                     using(StreamWriter strWrite = new StreamWriter(miArchivo))
                     {
@@ -65,6 +65,60 @@ namespace Cadeteria.Models
                 string error = ex.Message;
             }
             return cadetesJson;
+        }
+
+        public void BorrarCadete(int id)
+        {
+            try
+            {
+                List<Cadete> listaDeCadetes = getListCadetes();
+
+                Cadete cadeteAEliminar = listaDeCadetes.Where(cadete => cadete.Id == id).Single();
+                listaDeCadetes.Remove(cadeteAEliminar);
+
+                GuardarCadete(listaDeCadetes);
+
+            }
+            catch (Exception ex)
+            {
+                string error = ex.Message;
+            }
+        }
+
+        public void ModificarCadete(Cadete cadete)
+        {
+            try
+            {
+                List<Cadete> listaCadetes = getListCadetes();
+
+                Cadete cadeteSeleccionado = listaCadetes.Where(cad => cad.Id == cadete.Id).Single();
+
+                if (cadeteSeleccionado != null)
+                {
+
+                    cadeteSeleccionado.Nombre = cadete.Nombre;
+                    cadeteSeleccionado.Direccion = cadete.Direccion;
+                    cadeteSeleccionado.Telefono = cadete.Telefono;
+
+                    GuardarCadete(listaCadetes);
+
+                    /*
+                    FileStream archivoCadete = new FileStream(rutaArchivo, FileMode.Create);
+                    StreamWriter escribirCadete = new StreamWriter(archivoCadete);
+
+                    string strJson = JsonSerializer.Serialize(listaCadetes);
+                    escribirCadete.WriteLine("{0}", strJson);
+
+                    escribirCadete.Close();
+
+                    string mensaje = "LOS DATOS DEL CADETE " + cadeteSeleccionado.Id + " SE MODIFICARON CORRECTAMENTE";
+                    _logger.Info(mensaje);*/
+                }
+            }
+            catch (Exception ex)
+            {
+                string error = ex.Message;
+            }
         }
 
         public Cadeteria Cadeteria { get => cadeteria; set => cadeteria = value; }

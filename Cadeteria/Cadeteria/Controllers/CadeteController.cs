@@ -48,6 +48,7 @@ namespace Cadeteria.Controllers
                 if(_DB.Cadeteria.ListaCadetes[i].Id == id)
                 {
                     _DB.Cadeteria.ListaCadetes.Remove(_DB.Cadeteria.ListaCadetes[i]);
+                    _DB.BorrarCadete(id);
                     break;
                 }
             }
@@ -94,6 +95,7 @@ namespace Cadeteria.Controllers
                 cadeteAModificar.Nombre = nombre;
                 cadeteAModificar.Direccion = direc;
                 cadeteAModificar.Telefono = tel;
+                _DB.ModificarCadete(cadeteAModificar);
                 return Redirect("MostrarCadetes");
             }
             else
