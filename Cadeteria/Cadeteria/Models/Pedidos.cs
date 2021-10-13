@@ -22,7 +22,7 @@ namespace Cadeteria.Models
 
         public Pedidos()
         {
-
+            cliente = new Cliente();
         }
 
         public int NumeroPedido { get => numeroPedido; set => numeroPedido = value; }

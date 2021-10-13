@@ -158,6 +158,26 @@ namespace Cadeteria.Models
             }
             return pedidosJson;
         }
+
+        public void BorrarPedido(int numPedido)
+        {
+            try
+            {
+                List<Pedidos> listaDePedidos = GetListPedidos();
+
+                Pedidos pedidoAEliminar = listaDePedidos.Where(pedido => pedido.NumeroPedido == numPedido).Single();
+                listaDePedidos.Remove(pedidoAEliminar);
+
+                GuardarPedido(listaDePedidos);
+
+            }
+            catch (Exception ex)
+            {
+                string error = ex.Message;
+            }
+        }
+
+
         public void ModificarPedido(Pedidos pedido)
         {
             try

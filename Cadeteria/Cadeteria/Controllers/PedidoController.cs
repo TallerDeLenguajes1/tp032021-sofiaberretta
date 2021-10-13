@@ -62,27 +62,27 @@ namespace Cadeteria.Controllers
 
         }
 
-        public IActionResult eliminarPedido(int numPedido)//PROBLEMA: llega en 0
+        public IActionResult eliminarPedido(int NumeroPedido)
         {
             for (int i = 0; i < _DB.Cadeteria.ListaPedidos.Count(); i++)
             {
-                if (_DB.Cadeteria.ListaPedidos[i].NumeroPedido == numPedido)
+                if (_DB.Cadeteria.ListaPedidos[i].NumeroPedido == NumeroPedido)
                 {
                     _DB.Cadeteria.ListaPedidos.Remove(_DB.Cadeteria.ListaPedidos[i]);
-                    //_DB.BorrarPedido(numPedido);
+                    _DB.BorrarPedido(NumeroPedido);
                     break;
                 }
             }
 
-            return View("MostrarPedidos");
+            return View("MostrarPedidos", _DB.Cadeteria);
         }
 
-        public IActionResult modificarPedido(int numPedido)//PROBLEMA: llega en 0
+        public IActionResult modificarPedido(int NumeroPedido)
         {
             Pedidos pedidoAModificar = null;
             for (int i = 0; i < _DB.Cadeteria.ListaPedidos.Count(); i++)
             {
-                if (_DB.Cadeteria.ListaPedidos[i].NumeroPedido == numPedido)
+                if (_DB.Cadeteria.ListaPedidos[i].NumeroPedido == NumeroPedido)
                 {
                     pedidoAModificar = _DB.Cadeteria.ListaPedidos[i];
                     break;
@@ -95,7 +95,7 @@ namespace Cadeteria.Controllers
             }
             else
             {
-                return View("MostrarPedidos");
+                return View("MostrarPedidos", _DB.Cadeteria);
             }
         }
 
@@ -104,6 +104,7 @@ namespace Cadeteria.Controllers
             if (numPedido > 0)
             {
                 Pedidos pedidoAModificar = new Pedidos();
+                pedidoAModificar.NumeroPedido = numPedido;
                 pedidoAModificar.Observaciones = obs;
                 pedidoAModificar.Estado = estado;
                 pedidoAModificar.Cliente.Nombre = nombreC;
@@ -111,12 +112,12 @@ namespace Cadeteria.Controllers
                 pedidoAModificar.Cliente.Direccion = direcC;
                 pedidoAModificar.Cliente.Telefono = telC;
 
-                //_DB.ModificarPedido(pedidoAModificar);
-                return View("MostrarPedidos");
+                _DB.ModificarPedido(pedidoAModificar);
+                return Redirect("MostrarPedidos");//No se modifica en la vista
             }
             else
             {
-                return View("MostrarPedidos");
+                return View("MostrarPedidos", _DB.Cadeteria);
             }
         }
     }

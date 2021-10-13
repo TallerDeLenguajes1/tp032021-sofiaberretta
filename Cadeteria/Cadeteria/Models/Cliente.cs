@@ -20,6 +20,11 @@ namespace Cadeteria.Models
             Telefono = telefono;
         }
 
+        public Cliente()
+        {
+
+        }
+
         public string Id { get => id; set => id = value; }
         public string Nombre { get => nombre; set => nombre = value; }
         public string Direccion { get => direccion; set => direccion = value; }
