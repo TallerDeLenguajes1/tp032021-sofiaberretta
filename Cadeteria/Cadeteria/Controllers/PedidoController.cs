@@ -68,6 +68,8 @@ namespace Cadeteria.Controllers
                 Pedidos pedido = _DB.Cadeteria.ListaPedidos.Where(b => b.NumeroPedido == idPedido).First();
                 cadete.ListadoPedidos.Add(pedido);
 
+                _DB.GuardarCadete(_DB.Cadeteria.ListaCadetes);
+
                 string info = "Se asigno el cadete " + idCadete + " al pedido " + idPedido;
                 _logger.LogInformation(info);
             }
@@ -77,9 +79,20 @@ namespace Cadeteria.Controllers
 
         private void QuitarPedidoDeCadete(int idPedido)
         {
-            Pedidos pedido = _DB.Cadeteria.ListaPedidos.Find(x => x.NumeroPedido == idPedido);
-            _DB.Cadeteria.ListaCadetes.ForEach(cadete => cadete.ListadoPedidos.Remove(pedido));
-
+            Pedidos pedidoSeleccionado = _DB.Cadeteria.ListaPedidos.Find(x => x.NumeroPedido == idPedido);
+            foreach (var cadete in _DB.Cadeteria.ListaCadetes)
+            {
+                foreach (var pedido in cadete.ListadoPedidos)
+                {
+                    if (pedido.NumeroPedido == pedidoSeleccionado.NumeroPedido)
+                    {
+                        cadete.ListadoPedidos.Remove(pedido);
+                        break;
+                    }
+                }
+            }
+            
+            _DB.GuardarCadete(_DB.Cadeteria.ListaCadetes);
         }
 
         public IActionResult eliminarPedido(int NumeroPedido)
