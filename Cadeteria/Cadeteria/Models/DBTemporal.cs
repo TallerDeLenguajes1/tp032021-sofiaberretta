@@ -49,6 +49,9 @@ namespace Cadeteria.Models
                     }
                 }
 
+                string info = "Se guardo exitosamente los datos del cadete";
+                _logger.Info(info);
+
             } catch (Exception ex)
             {
                 var mensaje = "Mensaje de error: " + ex.Message;
@@ -107,6 +110,9 @@ namespace Cadeteria.Models
 
                 GuardarCadete(listaDeCadetes);
 
+                string info = "Se elimino exitosamente el cadete " + id;
+                _logger.Info(info);
+
             }
             catch (Exception ex)
             {
@@ -139,6 +145,9 @@ namespace Cadeteria.Models
 
                     GuardarCadete(listaCadetes);
                 }
+
+                string info = "Se modifico exitosamente los datos del cadete " + cadeteSeleccionado.Id;
+                _logger.Info(info);
             }
             catch (Exception ex)
             {
@@ -171,6 +180,9 @@ namespace Cadeteria.Models
                         strWrite.Dispose();
                     }
                 }
+
+                string info = "Se guardo exitosamente los datos del pedido";
+                _logger.Info(info);
 
             } catch (Exception ex)
             {
@@ -230,6 +242,8 @@ namespace Cadeteria.Models
 
                 GuardarPedido(listaDePedidos);
 
+                string info = "Se borro exitosamente el pedido " + numPedido;
+                _logger.Info(info);
             }
             catch (Exception ex)
             {
@@ -265,6 +279,9 @@ namespace Cadeteria.Models
                     pedidoSeleccionado.Cliente.Telefono = pedido.Cliente.Telefono;
 
                     GuardarPedido(listaPedidos);
+
+                    string info = "Se guardaron exitosamente los nuevos datos del pedido " + pedidoSeleccionado.NumeroPedido;
+                    _logger.Info(info);
                 }
             }
             catch (Exception ex)

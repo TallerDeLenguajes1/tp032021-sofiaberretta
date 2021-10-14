@@ -166,11 +166,15 @@ namespace Cadeteria.Controllers
 
             if (cadeteAPagar != null)
             {
+                string info = "Se le pago al Cadete " + cadeteAPagar.Id + " un monto total de " + cadeteAPagar.Pago();
+                _logger.LogInformation(info);
+
                 for (int i = 0; i < cadeteAPagar.ListadoPedidos.Count(); i++)
                 {
                     if(cadeteAPagar.ListadoPedidos[i].Estado == "Entregado")
                     {
-                        cadeteAPagar.ListadoPedidos.Remove(cadeteAPagar.ListadoPedidos[i]);
+                        //cadeteAPagar.ListadoPedidos.Remove(cadeteAPagar.ListadoPedidos[i]);
+                        cadeteAPagar.ListadoPedidos[i].Estado = "Pagado";
                         cadeteAPagar.CantPedidosPagados++;
                     }
                 }
@@ -180,11 +184,6 @@ namespace Cadeteria.Controllers
             {
                 return Redirect("ListarPedidos");
             }
-        }
-
-        public IActionResult PagoExitoso(int id)
-        {
-            return View();
         }
 
     }

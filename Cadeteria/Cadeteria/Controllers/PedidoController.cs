@@ -67,6 +67,9 @@ namespace Cadeteria.Controllers
                 Cadete cadete = _DB.Cadeteria.ListaCadetes.Where(a => a.Id == idCadete).First();
                 Pedidos pedido = _DB.Cadeteria.ListaPedidos.Where(b => b.NumeroPedido == idPedido).First();
                 cadete.ListadoPedidos.Add(pedido);
+
+                string info = "Se asigno el cadete " + idCadete + " al pedido " + idPedido;
+                _logger.LogInformation(info);
             }
 
             return View("MostrarPedidos", _DB.Cadeteria);
