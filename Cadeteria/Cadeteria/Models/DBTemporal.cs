@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NLog;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -9,12 +10,17 @@ namespace Cadeteria.Models
 {
     public class DBTemporal
     {
+        private readonly ILogger _logger;
         private Cadeteria cadeteria;
         string ubicacionCadetes = @"Cadetes.json";
         string ubicacionPedidos = @"Pedidos.json";
-        public DBTemporal()
+
+        public DBTemporal(ILogger logger)
         {
+            _logger = logger;
+
             Cadeteria = new Cadeteria();
+
             if(GetListCadetes() != null)
             {
                 Cadeteria.ListaCadetes = GetListCadetes();
@@ -45,7 +51,16 @@ namespace Cadeteria.Models
 
             } catch (Exception ex)
             {
-                string error = ex.Message;
+                var mensaje = "Mensaje de error: " + ex.Message;
+
+                if (ex.InnerException != null)
+                {
+                    mensaje = mensaje + " Excepcion interna: " + ex.InnerException.Message;
+                }
+
+                mensaje = mensaje + " Sucedio en: " + ex.StackTrace;
+
+                _logger.Error(mensaje);
             }
         }
 
@@ -67,7 +82,16 @@ namespace Cadeteria.Models
                 }
             } catch(Exception ex)
             {
-                string error = ex.Message;
+                var mensaje = "Mensaje de error: " + ex.Message;
+
+                if (ex.InnerException != null)
+                {
+                    mensaje = mensaje + " Excepcion interna: " + ex.InnerException.Message;
+                }
+
+                mensaje = mensaje + " Sucedio en: " + ex.StackTrace;
+
+                _logger.Error(mensaje);
             }
             return cadetesJson;
         }
@@ -86,7 +110,16 @@ namespace Cadeteria.Models
             }
             catch (Exception ex)
             {
-                string error = ex.Message;
+                var mensaje = "Mensaje de error: " + ex.Message;
+
+                if (ex.InnerException != null)
+                {
+                    mensaje = mensaje + " Excepcion interna: " + ex.InnerException.Message;
+                }
+
+                mensaje = mensaje + " Sucedio en: " + ex.StackTrace;
+
+                _logger.Error(mensaje);
             }
         }
 
@@ -109,7 +142,16 @@ namespace Cadeteria.Models
             }
             catch (Exception ex)
             {
-                string error = ex.Message;
+                var mensaje = "Mensaje de error: " + ex.Message;
+
+                if (ex.InnerException != null)
+                {
+                    mensaje = mensaje + " Excepcion interna: " + ex.InnerException.Message;
+                }
+
+                mensaje = mensaje + " Sucedio en: " + ex.StackTrace;
+
+                _logger.Error(mensaje);
             }
         }
 
@@ -132,7 +174,16 @@ namespace Cadeteria.Models
 
             } catch (Exception ex)
             {
-                string error = ex.Message;
+                var mensaje = "Mensaje de error: " + ex.Message;
+
+                if (ex.InnerException != null)
+                {
+                    mensaje = mensaje + " Excepcion interna: " + ex.InnerException.Message;
+                }
+
+                mensaje = mensaje + " Sucedio en: " + ex.StackTrace;
+
+                _logger.Error(mensaje);
             }
         }
 
@@ -154,7 +205,16 @@ namespace Cadeteria.Models
                 }
             } catch(Exception ex)
             {
-                string error = ex.Message;
+                var mensaje = "Mensaje de error: " + ex.Message;
+
+                if (ex.InnerException != null)
+                {
+                    mensaje = mensaje + " Excepcion interna: " + ex.InnerException.Message;
+                }
+
+                mensaje = mensaje + " Sucedio en: " + ex.StackTrace;
+
+                _logger.Error(mensaje);
             }
             return pedidosJson;
         }
@@ -173,7 +233,16 @@ namespace Cadeteria.Models
             }
             catch (Exception ex)
             {
-                string error = ex.Message;
+                var mensaje = "Mensaje de error: " + ex.Message;
+
+                if (ex.InnerException != null)
+                {
+                    mensaje = mensaje + " Excepcion interna: " + ex.InnerException.Message;
+                }
+
+                mensaje = mensaje + " Sucedio en: " + ex.StackTrace;
+
+                _logger.Error(mensaje);
             }
         }
 
@@ -200,7 +269,16 @@ namespace Cadeteria.Models
             }
             catch (Exception ex)
             {
-                string error = ex.Message;
+                var mensaje = "Mensaje de error: " + ex.Message;
+
+                if (ex.InnerException != null)
+                {
+                    mensaje = mensaje + " Excepcion interna: " + ex.InnerException.Message;
+                }
+
+                mensaje = mensaje + " Sucedio en: " + ex.StackTrace;
+
+                _logger.Error(mensaje);
             }
         }
 

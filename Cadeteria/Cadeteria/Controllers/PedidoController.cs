@@ -29,15 +29,32 @@ namespace Cadeteria.Controllers
 
         public IActionResult crearPedido(string obs, string estado, string nombreC, string idC, string direcC, string telC)
         {
-            int ultimoNum = 100;
-            if (_DB.Cadeteria.ListaPedidos.Count() > 0)
+            try
             {
-                ultimoNum = _DB.Cadeteria.ListaPedidos.Max(x => x.NumeroPedido);
+                int ultimoNum = 100;
+                if (_DB.Cadeteria.ListaPedidos.Count() > 0)
+                {
+                    ultimoNum = _DB.Cadeteria.ListaPedidos.Max(x => x.NumeroPedido);
+                }
+                ultimoNum++;
+                Pedidos nuevoPedido = new Pedidos(ultimoNum, obs, idC, nombreC, direcC, telC, estado);
+                _DB.Cadeteria.ListaPedidos.Add(nuevoPedido);
+                _DB.GuardarPedido(_DB.Cadeteria.ListaPedidos);
             }
-            ultimoNum++;
-            Pedidos nuevoPedido = new Pedidos(ultimoNum, obs, idC, nombreC, direcC, telC, estado);
-            _DB.Cadeteria.ListaPedidos.Add(nuevoPedido);
-            _DB.GuardarPedido(_DB.Cadeteria.ListaPedidos);
+            catch (Exception ex)
+            {
+                var mensaje = "Mensaje de error: " + ex.Message;
+
+                if (ex.InnerException != null)
+                {
+                    mensaje = mensaje + " Excepcion interna: " + ex.InnerException.Message;
+                }
+
+                mensaje = mensaje + " Sucedio en: " + ex.StackTrace;
+
+                _logger.LogError(mensaje);
+            }
+            
             return View("MostrarPedidos", _DB.Cadeteria);
         }
 
@@ -101,24 +118,39 @@ namespace Cadeteria.Controllers
 
         public IActionResult cambiarDatosPedido(int numPedido, string obs, string estado, string nombreC, string idC, string direcC, string telC)
         {
-            if (numPedido > 0)
+            try
             {
-                Pedidos pedidoAModificar = new Pedidos();
-                pedidoAModificar.NumeroPedido = numPedido;
-                pedidoAModificar.Observaciones = obs;
-                pedidoAModificar.Estado = estado;
-                pedidoAModificar.Cliente.Nombre = nombreC;
-                pedidoAModificar.Cliente.Id = idC;
-                pedidoAModificar.Cliente.Direccion = direcC;
-                pedidoAModificar.Cliente.Telefono = telC;
+                if (numPedido > 0)
+                {
+                    Pedidos pedidoAModificar = new Pedidos();
+                    pedidoAModificar.NumeroPedido = numPedido;
+                    pedidoAModificar.Observaciones = obs;
+                    pedidoAModificar.Estado = estado;
+                    pedidoAModificar.Cliente.Nombre = nombreC;
+                    pedidoAModificar.Cliente.Id = idC;
+                    pedidoAModificar.Cliente.Direccion = direcC;
+                    pedidoAModificar.Cliente.Telefono = telC;
 
-                _DB.ModificarPedido(pedidoAModificar);
-                return Redirect("MostrarPedidos");//No se modifica en la vista
+                    _DB.ModificarPedido(pedidoAModificar);
+                    return View("MostrarPedidos", _DB.Cadeteria);//No se modifica en la vista
+                }
             }
-            else
+            catch (Exception ex)
             {
-                return View("MostrarPedidos", _DB.Cadeteria);
+                var mensaje = "Mensaje de error: " + ex.Message;
+
+                if (ex.InnerException != null)
+                {
+                    mensaje = mensaje + " Excepcion interna: " + ex.InnerException.Message;
+                }
+
+                mensaje = mensaje + " Sucedio en: " + ex.StackTrace;
+
+                _logger.LogError(mensaje);
             }
+            
+            return View("MostrarPedidos", _DB.Cadeteria);
+            
         }
     }
 }

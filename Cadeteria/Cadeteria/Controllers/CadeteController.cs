@@ -29,16 +29,36 @@ namespace Cadeteria.Controllers
 
         public IActionResult crearCadete(string nombre, string direc, string tel)
         {
-            int ultimoId = 0;
-            if (_DB.Cadeteria.ListaCadetes.Count() > 0)
+            try
             {
-                ultimoId = _DB.Cadeteria.ListaCadetes.Max(x => x.Id);
+                int ultimoId = 0;
+                if (_DB.Cadeteria.ListaCadetes.Count() > 0)
+                {
+                    ultimoId = _DB.Cadeteria.ListaCadetes.Max(x => x.Id);
+                }
+                ultimoId++;
+                Cadete nuevoCadete = new Cadete(ultimoId, nombre, direc, tel);
+                _DB.Cadeteria.ListaCadetes.Add(nuevoCadete);
+                _DB.GuardarCadete(_DB.Cadeteria.ListaCadetes);
+
+                return View("MostrarCadetes", _DB.Cadeteria.ListaCadetes);
+
             }
-            ultimoId++;
-            Cadete nuevoCadete = new Cadete(ultimoId, nombre, direc, tel);
-            _DB.Cadeteria.ListaCadetes.Add(nuevoCadete);
-            _DB.GuardarCadete(_DB.Cadeteria.ListaCadetes);
-            return View("MostrarCadetes", _DB.Cadeteria.ListaCadetes);
+            catch (Exception ex)
+            {
+                var mensaje = "Mensaje de error: " + ex.Message;
+
+                if (ex.InnerException != null)
+                {
+                    mensaje = mensaje + " Excepcion interna: " + ex.InnerException.Message;
+                }
+
+                mensaje = mensaje + " Sucedio en: " + ex.StackTrace;
+
+                _logger.LogError(mensaje);
+            }
+
+            return View("Index");
         }
 
         public IActionResult eliminarCadete(int id) 
@@ -80,22 +100,36 @@ namespace Cadeteria.Controllers
 
         public IActionResult cambiarDatosCadete(int id, string nombre, string direc, string tel)
         {
-            if (id > 0)
+            try
             {
-                Cadete cadeteAModificar = new Cadete();
-                cadeteAModificar.Nombre = nombre;
-                cadeteAModificar.Direccion = direc;
-                cadeteAModificar.Telefono = tel;
-                _DB.ModificarCadete(cadeteAModificar);
-                return Redirect("MostrarCadetes");
+                if (id > 0)
+                {
+                    Cadete cadeteAModificar = new Cadete();
+                    cadeteAModificar.Nombre = nombre;
+                    cadeteAModificar.Direccion = direc;
+                    cadeteAModificar.Telefono = tel;
+                    _DB.ModificarCadete(cadeteAModificar);
+
+                    return View("MostrarCadetes", _DB.Cadeteria.ListaCadetes);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                return View("MostrarCadetes");
+                var mensaje = "Mensaje de error: " + ex.Message;
+
+                if (ex.InnerException != null)
+                {
+                    mensaje = mensaje + " Excepcion interna: " + ex.InnerException.Message;
+                }
+
+                mensaje = mensaje + " Sucedio en: " + ex.StackTrace;
+
+                _logger.LogError(mensaje);
             }
+
+            return View("MostrarCadetes", _DB.Cadeteria.ListaCadetes);
         }
 
     }
 
-    
 }

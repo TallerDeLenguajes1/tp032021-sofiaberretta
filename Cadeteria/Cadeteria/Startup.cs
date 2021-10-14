@@ -10,12 +10,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using NLog;
 using Cadeteria.Models;
+using NLog.Web;
 
 namespace Cadeteria
 {
     public class Startup
     {
-        static DBTemporal DB = new DBTemporal();
+        static readonly DBTemporal DB = new DBTemporal(NLogBuilder.ConfigureNLog("nlog.config").GetCurrentClassLogger());
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
