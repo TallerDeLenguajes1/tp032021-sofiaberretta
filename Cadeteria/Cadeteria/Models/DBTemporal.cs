@@ -280,6 +280,8 @@ namespace Cadeteria.Models
 
                     GuardarPedido(listaPedidos);
 
+                    this.Cadeteria.ListaPedidos = listaPedidos;
+
                     string info = "Se guardaron exitosamente los nuevos datos del pedido " + pedidoSeleccionado.NumeroPedido;
                     _logger.Info(info);
                 }
