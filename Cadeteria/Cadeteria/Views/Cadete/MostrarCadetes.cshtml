@@ -17,6 +17,7 @@
             <th scope="col">Direccion</th>
             <th scope="col">Telefono</th>
             <th scope="col"></th>
+            <th scope="col"></th>
         </tr>
     </thead>
     <tbody>
@@ -27,6 +28,9 @@
                 <td>@item.Nombre</td>
                 <td>@item.Direccion</td>
                 <td>@item.Telefono</td>
+                <td>
+                    <a class="nav-link" asp-route-id="@item.Id" asp-action="listarPedidos">Pedidos @item.ListadoPedidos.Count() </a>
+                </td>
                 <td>
                     <a class="nav-link" asp-route-id="@item.Id" asp-controller="Cadete" asp-action="modificarCadete">Modificar</a>
                     <a class="nav-link" asp-route-id="@item.Id" asp-controller="Cadete" asp-action="eliminarCadete" onclick="return confirm('¿Seguro que desea eliminar al cadete @item.Nombre?')">

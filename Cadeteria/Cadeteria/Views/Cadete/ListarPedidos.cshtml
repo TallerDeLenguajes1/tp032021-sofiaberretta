@@ -1,39 +1,49 @@
 ﻿@{
-    ViewData["Title"] = "Listado Cadetes";
+    ViewData["Title"] = "Listado Pedidos";
 }
 
-@model List<Cadete>
+@model Cadete
 
-<h1 class="display-4">Listado de Cadetes</h1>
-<div class="col-12">
-    <a asp-controller="Cadete" asp-action="Index" class="btn btn-primary">Crear nuevo Cadete</a>
-</div>
-
-<table class="table">
-    <thead>
-        <tr class="table-primary">
-            <th scope="col">ID</th>
-            <th scope="col">Nombre</th>
-            <th scope="col">Direccion</th>
-            <th scope="col">Telefono</th>
-            <th scope="col"></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <th scope="row" class="table-primary">@item.Id</th>
-                <td>@item.Nombre</td>
-                <td>@item.Direccion</td>
-                <td>@item.Telefono</td>
-                <td>
-                    <a class="nav-link" asp-route-id="@item.Id" asp-controller="Cadete" asp-action="modificarCadete">Modificar</a>
-                    <a class="nav-link" asp-route-id="@item.Id" asp-controller="Cadete" asp-action="eliminarCadete" onclick="return confirm('¿Seguro que desea eliminar al cadete @item.Nombre?')">
-                    Eliminar
-                    </a>
-                </td>
+<h1 class="display-4">Listado de Pedidos de @Model.Nombre</h1>
+@if (Model.ListadoPedidos.Count > 0)
+{
+    <table class="table">
+        <thead>
+            <tr class="table-primary">
+                <th scope="col">N° Pedido</th>
+                <th scope="col">Observaciones</th>
+                <th scope="col">Cliente</th>
+                <th scope="col">Direccion</th>
+                <th scope="col">Telefono</th>
+                <th scope="col">Estado</th>
             </tr>
-         }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.ListadoPedidos)
+            {
+                <tr>
+                    <th scope="row" class="table-primary">@item.NumeroPedido</th>
+                    <td>@item.Observaciones</td>
+                    <td>@item.Cliente.Nombre</td>
+                    <td>@item.Cliente.Direccion</td>
+                    <td>@item.Cliente.Telefono</td>
+                    @if (item.Estado == "Entregado")
+                    {
+                        <td style="background-color:greenyellow">@item.Estado</td>
+                    }
+                    else
+                    {
+                        <td style="background-color:orange">@item.Estado</td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+    <h4>TOTAL A PAGAR: $@Model.Pago()</h4>
+    <a class="nav-link" asp-route-id="@Model.Id" asp-controller="Cadete" asp-action="pagarCadete">Pagar</a>
+}
+else
+{
+    <h4>No se encontraron pedidos</h4>
+    <p>Para crear un pedido <a class="nav-link" asp-controller="Pedido" asp-action="Index">click aqui</a></p>
+}   

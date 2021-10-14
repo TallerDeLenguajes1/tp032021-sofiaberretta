@@ -130,6 +130,63 @@ namespace Cadeteria.Controllers
             return View("MostrarCadetes", _DB.Cadeteria.ListaCadetes);
         }
 
+        public IActionResult listarPedidos(int id)
+        {
+            Cadete cadeteAListar = null;
+            for (int i = 0; i < _DB.Cadeteria.ListaCadetes.Count(); i++)
+            {
+                if (_DB.Cadeteria.ListaCadetes[i].Id == id)
+                {
+                    cadeteAListar = _DB.Cadeteria.ListaCadetes[i];
+                    break;
+                }
+            }
+
+            if (cadeteAListar != null)
+            {
+                return View("ListarPedidos", cadeteAListar);
+            }
+            else
+            {
+                return Redirect("MostrarCadetes");
+            }
+        }
+
+        public IActionResult pagarCadete(int id)
+        {
+            Cadete cadeteAPagar = null;
+            for (int i = 0; i < _DB.Cadeteria.ListaCadetes.Count(); i++)
+            {
+                if (_DB.Cadeteria.ListaCadetes[i].Id == id)
+                {
+                    cadeteAPagar = _DB.Cadeteria.ListaCadetes[i];
+                    break;
+                }
+            }
+
+            if (cadeteAPagar != null)
+            {
+                for (int i = 0; i < cadeteAPagar.ListadoPedidos.Count(); i++)
+                {
+                    if(cadeteAPagar.ListadoPedidos[i].Estado == "Entregado")
+                    {
+                        cadeteAPagar.ListadoPedidos.Remove(cadeteAPagar.ListadoPedidos[i]);
+                        cadeteAPagar.CantPedidosPagados++;
+                    }
+                }
+                return View("PagoExitoso", cadeteAPagar);
+            }
+            else
+            {
+                return Redirect("ListarPedidos");
+            }
+        }
+
+        public IActionResult PagoExitoso(int id)
+        {
+            return View();
+        }
+
     }
 
 }
