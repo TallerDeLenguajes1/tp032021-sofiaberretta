@@ -173,11 +173,13 @@ namespace Cadeteria.Controllers
                 {
                     if(cadeteAPagar.ListadoPedidos[i].Estado == "Entregado")
                     {
-                        //cadeteAPagar.ListadoPedidos.Remove(cadeteAPagar.ListadoPedidos[i]);
                         cadeteAPagar.ListadoPedidos[i].Estado = "Pagado";
                         cadeteAPagar.CantPedidosPagados++;
                     }
                 }
+
+                _DB.GuardarCadete(_DB.Cadeteria.ListaCadetes);
+
                 return View("PagoExitoso", cadeteAPagar);
             }
             else

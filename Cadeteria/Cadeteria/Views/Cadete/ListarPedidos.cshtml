@@ -21,30 +21,34 @@
         <tbody>
             @foreach (var item in Model.ListadoPedidos)
             {
-            <tr>
-                <th scope="row" class="table-primary">@item.NumeroPedido</th>
-                <td>@item.Observaciones</td>
-                <td>@item.Cliente.Nombre</td>
-                <td>@item.Cliente.Direccion</td>
-                <td>@item.Cliente.Telefono</td>
-                @if (item.Estado == "Entregado")
-                {
-                    <td style="background-color:greenyellow">@item.Estado</td>
-                }
-                else if (item.Estado == "Pagado")
-                {
-                    <td style="background-color:lightblue">@item.Estado</td>
-                }
-                else
-                {
-                    <td style="background-color:orange">@item.Estado</td>
-                }
-            </tr>
+                <tr>
+                    <th scope="row" class="table-primary">@item.NumeroPedido</th>
+                    <td>@item.Observaciones</td>
+                    <td>@item.Cliente.Nombre</td>
+                    <td>@item.Cliente.Direccion</td>
+                    <td>@item.Cliente.Telefono</td>
+                    @if (item.Estado == "Entregado")
+                    {
+                        <td style="background-color:greenyellow">@item.Estado</td>
+                    }
+                    else if (item.Estado == "Pagado")
+                    {
+                        <td style="background-color:lightblue">@item.Estado</td>
+                    }
+                    else
+                    {
+                        <td style="background-color:orange">@item.Estado</td>
+                    }
+                </tr>
             }
         </tbody>
     </table>
     <h4>TOTAL A PAGAR: $@Model.Pago()</h4>
-    <a class="nav-link" asp-route-id="@Model.Id" asp-controller="Cadete" asp-action="pagarCadete">Pagar</a>
+    @if (Model.Pago() != 0)
+    {
+        <a class="nav-link" asp-route-id="@Model.Id" asp-controller="Cadete" asp-action="pagarCadete">Pagar</a>
+    }
+
 }
 else
 {
