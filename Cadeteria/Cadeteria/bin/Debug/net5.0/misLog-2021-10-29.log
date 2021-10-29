@@ -1,0 +1,197 @@
+2021-10-29 17:52:44.4098|0|DEBUG|Cadeteria.Program|init main 
+2021-10-29 17:52:54.0883|0|INFO|Microsoft.Hosting.Lifetime|Now listening on: https://localhost:5001 
+2021-10-29 17:52:54.1306|0|INFO|Microsoft.Hosting.Lifetime|Now listening on: http://localhost:5000 
+2021-10-29 17:52:54.1624|0|INFO|Microsoft.Hosting.Lifetime|Application started. Press Ctrl+C to shut down. 
+2021-10-29 17:52:54.2088|0|INFO|Microsoft.Hosting.Lifetime|Hosting environment: Development 
+2021-10-29 17:52:54.2152|0|INFO|Microsoft.Hosting.Lifetime|Content root path: C:\Users\Alumno\Desktop\tp032021-sofiaberretta\Cadeteria\Cadeteria 
+2021-10-29 18:00:40.4795|0|DEBUG|Cadeteria.Program|init main 
+2021-10-29 18:00:42.0702|0|INFO|Microsoft.Hosting.Lifetime|Now listening on: https://localhost:5001 
+2021-10-29 18:00:42.1265|0|INFO|Microsoft.Hosting.Lifetime|Now listening on: http://localhost:5000 
+2021-10-29 18:00:42.1586|0|INFO|Microsoft.Hosting.Lifetime|Application started. Press Ctrl+C to shut down. 
+2021-10-29 18:00:42.1859|0|INFO|Microsoft.Hosting.Lifetime|Hosting environment: Development 
+2021-10-29 18:00:42.2005|0|INFO|Microsoft.Hosting.Lifetime|Content root path: C:\Users\Alumno\Desktop\tp032021-sofiaberretta\Cadeteria\Cadeteria 
+2021-10-29 18:04:01.9525|1|ERROR|Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware|An unhandled exception has occurred while executing the request. code = Error (1), message = System.Data.SQLite.SQLiteException (0x800007BF): SQL logic error
+no such column: Activo
+   at System.Data.SQLite.SQLite3.Prepare(SQLiteConnection cnn, String strSql, SQLiteStatement previous, UInt32 timeoutMS, String& strRemain)
+   at System.Data.SQLite.SQLiteCommand.BuildNextCommand()
+   at System.Data.SQLite.SQLiteCommand.GetStatement(Int32 index)
+   at System.Data.SQLite.SQLiteDataReader.NextResult()
+   at System.Data.SQLite.SQLiteDataReader..ctor(SQLiteCommand cmd, CommandBehavior behave)
+   at System.Data.SQLite.SQLiteCommand.ExecuteReader(CommandBehavior behavior)
+   at System.Data.SQLite.SQLiteCommand.ExecuteReader()
+   at Cadeteria.Models.RepositorioCadete.getAllCadetes() in C:\Users\Alumno\Desktop\tp032021-sofiaberretta\Cadeteria\Cadeteria\Models\RepositorioCadete.cs:line 30
+   at Cadeteria.Controllers.CadeteController.MostrarCadetes() in C:\Users\Alumno\Desktop\tp032021-sofiaberretta\Cadeteria\Cadeteria\Controllers\CadeteController.cs:line 31
+   at lambda_method17(Closure , Object , Object[] )
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.SyncActionResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeActionMethodAsync()
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeNextActionFilterAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|24_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeFilterPipelineAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2021-10-29 18:07:05.0908|0|DEBUG|Cadeteria.Program|init main 
+2021-10-29 18:07:06.1459|0|INFO|Microsoft.Hosting.Lifetime|Now listening on: https://localhost:5001 
+2021-10-29 18:07:06.1749|0|INFO|Microsoft.Hosting.Lifetime|Now listening on: http://localhost:5000 
+2021-10-29 18:07:06.1749|0|INFO|Microsoft.Hosting.Lifetime|Application started. Press Ctrl+C to shut down. 
+2021-10-29 18:07:06.1929|0|INFO|Microsoft.Hosting.Lifetime|Hosting environment: Development 
+2021-10-29 18:07:06.2801|0|INFO|Microsoft.Hosting.Lifetime|Content root path: C:\Users\Alumno\Desktop\tp032021-sofiaberretta\Cadeteria\Cadeteria 
+2021-10-29 18:07:06.5660|1|ERROR|Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware|An unhandled exception has occurred while executing the request. code = Error (1), message = System.Data.SQLite.SQLiteException (0x800007BF): SQL logic error
+no such column: Activo
+   at System.Data.SQLite.SQLite3.Prepare(SQLiteConnection cnn, String strSql, SQLiteStatement previous, UInt32 timeoutMS, String& strRemain)
+   at System.Data.SQLite.SQLiteCommand.BuildNextCommand()
+   at System.Data.SQLite.SQLiteCommand.GetStatement(Int32 index)
+   at System.Data.SQLite.SQLiteDataReader.NextResult()
+   at System.Data.SQLite.SQLiteDataReader..ctor(SQLiteCommand cmd, CommandBehavior behave)
+   at System.Data.SQLite.SQLiteCommand.ExecuteReader(CommandBehavior behavior)
+   at System.Data.SQLite.SQLiteCommand.ExecuteReader()
+   at Cadeteria.Models.RepositorioCadete.getAllCadetes() in C:\Users\Alumno\Desktop\tp032021-sofiaberretta\Cadeteria\Cadeteria\Models\RepositorioCadete.cs:line 30
+   at Cadeteria.Controllers.CadeteController.MostrarCadetes() in C:\Users\Alumno\Desktop\tp032021-sofiaberretta\Cadeteria\Cadeteria\Controllers\CadeteController.cs:line 31
+   at lambda_method1(Closure , Object , Object[] )
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.SyncActionResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeActionMethodAsync()
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeNextActionFilterAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|24_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeFilterPipelineAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2021-10-29 18:07:58.8201|1|ERROR|Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware|An unhandled exception has occurred while executing the request. code = Error (1), message = System.Data.SQLite.SQLiteException (0x800007BF): SQL logic error
+no such column: Activo
+   at System.Data.SQLite.SQLite3.Prepare(SQLiteConnection cnn, String strSql, SQLiteStatement previous, UInt32 timeoutMS, String& strRemain)
+   at System.Data.SQLite.SQLiteCommand.BuildNextCommand()
+   at System.Data.SQLite.SQLiteCommand.GetStatement(Int32 index)
+   at System.Data.SQLite.SQLiteDataReader.NextResult()
+   at System.Data.SQLite.SQLiteDataReader..ctor(SQLiteCommand cmd, CommandBehavior behave)
+   at System.Data.SQLite.SQLiteCommand.ExecuteReader(CommandBehavior behavior)
+   at System.Data.SQLite.SQLiteCommand.ExecuteReader()
+   at Cadeteria.Models.RepositorioCadete.getAllCadetes() in C:\Users\Alumno\Desktop\tp032021-sofiaberretta\Cadeteria\Cadeteria\Models\RepositorioCadete.cs:line 30
+   at Cadeteria.Controllers.CadeteController.MostrarCadetes() in C:\Users\Alumno\Desktop\tp032021-sofiaberretta\Cadeteria\Cadeteria\Controllers\CadeteController.cs:line 31
+   at lambda_method1(Closure , Object , Object[] )
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.SyncActionResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeActionMethodAsync()
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeNextActionFilterAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|24_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeFilterPipelineAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2021-10-29 18:10:42.5827|0|DEBUG|Cadeteria.Program|init main 
+2021-10-29 18:10:43.3662|0|INFO|Microsoft.Hosting.Lifetime|Now listening on: https://localhost:5001 
+2021-10-29 18:10:43.3981|0|INFO|Microsoft.Hosting.Lifetime|Now listening on: http://localhost:5000 
+2021-10-29 18:10:43.4059|0|INFO|Microsoft.Hosting.Lifetime|Application started. Press Ctrl+C to shut down. 
+2021-10-29 18:10:43.4059|0|INFO|Microsoft.Hosting.Lifetime|Hosting environment: Development 
+2021-10-29 18:10:43.4233|0|INFO|Microsoft.Hosting.Lifetime|Content root path: C:\Users\Alumno\Desktop\tp032021-sofiaberretta\Cadeteria\Cadeteria 
+2021-10-29 18:16:38.5034|0|DEBUG|Cadeteria.Program|init main 
+2021-10-29 18:16:39.1863|0|INFO|Microsoft.Hosting.Lifetime|Now listening on: https://localhost:5001 
+2021-10-29 18:16:39.2061|0|INFO|Microsoft.Hosting.Lifetime|Now listening on: http://localhost:5000 
+2021-10-29 18:16:39.2415|0|INFO|Microsoft.Hosting.Lifetime|Application started. Press Ctrl+C to shut down. 
+2021-10-29 18:16:39.2496|0|INFO|Microsoft.Hosting.Lifetime|Hosting environment: Development 
+2021-10-29 18:16:39.2496|0|INFO|Microsoft.Hosting.Lifetime|Content root path: C:\Users\Alumno\Desktop\tp032021-sofiaberretta\Cadeteria\Cadeteria 
+2021-10-29 18:16:39.8045|1|ERROR|Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware|An unhandled exception has occurred while executing the request. System.ArgumentNullException: Value cannot be null. (Parameter 'source')
+   at System.Linq.ThrowHelper.ThrowArgumentNullException(ExceptionArgument argument)
+   at System.Linq.Enumerable.Count[TSource](IEnumerable`1 source)
+   at AspNetCore.Views_Cadete_MostrarCadetes.<>c__DisplayClass14_0.<<ExecuteAsync>b__1>d.MoveNext() in C:\Users\Alumno\Desktop\tp032021-sofiaberretta\Cadeteria\Cadeteria\Views\Cadete\MostrarCadetes.cshtml:line 32
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Razor.Runtime.TagHelpers.TagHelperExecutionContext.SetOutputContentAsync()
+   at AspNetCore.Views_Cadete_MostrarCadetes.ExecuteAsync() in C:\Users\Alumno\Desktop\tp032021-sofiaberretta\Cadeteria\Cadeteria\Views\Cadete\MostrarCadetes.cshtml:line 32
+   at Microsoft.AspNetCore.Mvc.Razor.RazorView.RenderPageCoreAsync(IRazorPage page, ViewContext context)
+   at Microsoft.AspNetCore.Mvc.Razor.RazorView.RenderPageAsync(IRazorPage page, ViewContext context, Boolean invokeViewStarts)
+   at Microsoft.AspNetCore.Mvc.Razor.RazorView.RenderAsync(ViewContext context)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewExecutor.ExecuteAsync(ViewContext viewContext, String contentType, Nullable`1 statusCode)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewExecutor.ExecuteAsync(ViewContext viewContext, String contentType, Nullable`1 statusCode)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewExecutor.ExecuteAsync(ActionContext actionContext, IView view, ViewDataDictionary viewData, ITempDataDictionary tempData, String contentType, Nullable`1 statusCode)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewResultExecutor.ExecuteAsync(ActionContext context, ViewResult result)
+   at Microsoft.AspNetCore.Mvc.ViewResult.ExecuteResultAsync(ActionContext context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResultFilterAsync>g__Awaited|29_0[TFilter,TFilterAsync](ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResultExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.ResultNext[TFilter,TFilterAsync](State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeResultFilters()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|24_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeFilterPipelineAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2021-10-29 18:17:55.5778|0|INFO|Microsoft.Hosting.Lifetime|Application is shutting down... 
+2021-10-29 18:20:49.5834|0|DEBUG|Cadeteria.Program|init main 
+2021-10-29 18:20:53.0181|0|INFO|Microsoft.Hosting.Lifetime|Now listening on: https://localhost:5001 
+2021-10-29 18:20:53.0490|0|INFO|Microsoft.Hosting.Lifetime|Now listening on: http://localhost:5000 
+2021-10-29 18:20:53.0790|0|INFO|Microsoft.Hosting.Lifetime|Application started. Press Ctrl+C to shut down. 
+2021-10-29 18:20:53.0790|0|INFO|Microsoft.Hosting.Lifetime|Hosting environment: Development 
+2021-10-29 18:20:53.0790|0|INFO|Microsoft.Hosting.Lifetime|Content root path: C:\Users\Alumno\Desktop\tp032021-sofiaberretta\Cadeteria\Cadeteria 
+2021-10-29 18:27:59.9408|0|DEBUG|Cadeteria.Program|init main 
+2021-10-29 18:28:02.5338|0|INFO|Microsoft.Hosting.Lifetime|Now listening on: https://localhost:5001 
+2021-10-29 18:28:02.5627|0|INFO|Microsoft.Hosting.Lifetime|Now listening on: http://localhost:5000 
+2021-10-29 18:28:02.5816|0|INFO|Microsoft.Hosting.Lifetime|Application started. Press Ctrl+C to shut down. 
+2021-10-29 18:28:02.5816|0|INFO|Microsoft.Hosting.Lifetime|Hosting environment: Development 
+2021-10-29 18:28:02.5816|0|INFO|Microsoft.Hosting.Lifetime|Content root path: C:\Users\Alumno\Desktop\tp032021-sofiaberretta\Cadeteria\Cadeteria 
+2021-10-29 18:28:12.3189|1|ERROR|Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware|An unhandled exception has occurred while executing the request. System.ArgumentNullException: Value cannot be null. (Parameter 'source')
+   at System.Linq.ThrowHelper.ThrowArgumentNullException(ExceptionArgument argument)
+   at System.Linq.Enumerable.Count[TSource](IEnumerable`1 source)
+   at AspNetCore.Views_Cadete_MostrarCadetes.<>c__DisplayClass14_0.<<ExecuteAsync>b__1>d.MoveNext() in C:\Users\Alumno\Desktop\tp032021-sofiaberretta\Cadeteria\Cadeteria\Views\Cadete\MostrarCadetes.cshtml:line 32
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Razor.Runtime.TagHelpers.TagHelperExecutionContext.SetOutputContentAsync()
+   at AspNetCore.Views_Cadete_MostrarCadetes.ExecuteAsync() in C:\Users\Alumno\Desktop\tp032021-sofiaberretta\Cadeteria\Cadeteria\Views\Cadete\MostrarCadetes.cshtml:line 32
+   at Microsoft.AspNetCore.Mvc.Razor.RazorView.RenderPageCoreAsync(IRazorPage page, ViewContext context)
+   at Microsoft.AspNetCore.Mvc.Razor.RazorView.RenderPageAsync(IRazorPage page, ViewContext context, Boolean invokeViewStarts)
+   at Microsoft.AspNetCore.Mvc.Razor.RazorView.RenderAsync(ViewContext context)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewExecutor.ExecuteAsync(ViewContext viewContext, String contentType, Nullable`1 statusCode)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewExecutor.ExecuteAsync(ViewContext viewContext, String contentType, Nullable`1 statusCode)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewExecutor.ExecuteAsync(ActionContext actionContext, IView view, ViewDataDictionary viewData, ITempDataDictionary tempData, String contentType, Nullable`1 statusCode)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewResultExecutor.ExecuteAsync(ActionContext context, ViewResult result)
+   at Microsoft.AspNetCore.Mvc.ViewResult.ExecuteResultAsync(ActionContext context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResultFilterAsync>g__Awaited|29_0[TFilter,TFilterAsync](ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResultExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.ResultNext[TFilter,TFilterAsync](State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeResultFilters()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|24_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeFilterPipelineAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2021-10-29 18:31:05.1692|0|DEBUG|Cadeteria.Program|init main 
+2021-10-29 18:31:06.8151|0|INFO|Microsoft.Hosting.Lifetime|Now listening on: https://localhost:5001 
+2021-10-29 18:31:06.8506|0|INFO|Microsoft.Hosting.Lifetime|Now listening on: http://localhost:5000 
+2021-10-29 18:31:06.8803|0|INFO|Microsoft.Hosting.Lifetime|Application started. Press Ctrl+C to shut down. 
+2021-10-29 18:31:06.8803|0|INFO|Microsoft.Hosting.Lifetime|Hosting environment: Development 
+2021-10-29 18:31:06.8803|0|INFO|Microsoft.Hosting.Lifetime|Content root path: C:\Users\Alumno\Desktop\tp032021-sofiaberretta\Cadeteria\Cadeteria 

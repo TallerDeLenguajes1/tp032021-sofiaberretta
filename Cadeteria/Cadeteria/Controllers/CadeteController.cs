@@ -12,11 +12,15 @@ namespace Cadeteria.Controllers
     {
         private readonly ILogger<CadeteController> _logger;
         private readonly DBTemporal _DB;
-        public CadeteController(ILogger<CadeteController> logger, DBTemporal DB)
+        private readonly RepositorioCadete repoCadete;
+
+        public CadeteController(ILogger<CadeteController> logger, DBTemporal DB, RepositorioCadete repoCadete)
         {
             _logger = logger;
             _DB = DB;
+            this.repoCadete = repoCadete;
         }
+        
         public IActionResult Index()
         {
             return View();
@@ -24,7 +28,7 @@ namespace Cadeteria.Controllers
 
         public IActionResult MostrarCadetes()
         {
-            return View(_DB.Cadeteria.ListaCadetes);
+            return View(repoCadete.getAllCadetes());
         }
 
         public IActionResult crearCadete(string nombre, string direc, string tel)
