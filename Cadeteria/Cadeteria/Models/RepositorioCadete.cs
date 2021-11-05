@@ -24,7 +24,7 @@ namespace Cadeteria.Models
             {
                 conexion.Open();
 
-                string instruccionSQL = "SELECT * FROM Cadetes;";
+                string instruccionSQL = "SELECT * FROM Cadetes WHERE activo = 1;";
                 SQLiteCommand command = new SQLiteCommand(instruccionSQL, conexion);
 
                 var dataReader = command.ExecuteReader();
@@ -46,6 +46,38 @@ namespace Cadeteria.Models
 
             return listadoCadetes;
         }
+
+
+        public Cadete getCadeteById(int id)
+        {
+            Cadete cadeteBuscado = null;
+            using(SQLiteConnection conexion = new SQLiteConnection(connectionString))
+            {
+                conexion.Open();
+
+                string instruccionSQL = "SELECT * FROM Cadetes WHERE cadeteID = @idCadete;";
+                SQLiteCommand command = new SQLiteCommand(instruccionSQL, conexion);
+
+                command.Parameters.AddWithValue("@idCadete", id);
+
+                var dataReader = command.ExecuteReader();
+                while(dataReader.Read())
+                {
+                    cadeteBuscado = new Cadete()
+                    {
+                        Id = Convert.ToInt32(dataReader["cadeteID"]),
+                        Nombre = dataReader["cadeteNombre"].ToString(),
+                        Telefono = dataReader["cadeteTelefono"].ToString(),
+                        Direccion = dataReader["cadeteDireccion"].ToString(),
+                    };
+                }
+
+                conexion.Close();
+            }
+
+            return cadeteBuscado;
+        }
+
 
         public void guardarCadete(Cadete cadeteAGuardar)
         {
@@ -103,9 +135,31 @@ namespace Cadeteria.Models
             }
         }
 
-        public void borrarrCadete(Cadete cadeteABorrar)
+        public void borrarCadete(Cadete cadeteABorrar)
         {
-         // como ??????
+            try
+            {
+                string instruccion = @"UPDATE Cadetes
+                                        SET activo = @activo                                        
+                                        WHERE cadeteID = @cadeteID";
+
+                using (var conexion = new SQLiteConnection(connectionString))
+                {
+                    using (SQLiteCommand command = new SQLiteCommand(instruccion, conexion))
+                    {
+                        command.Parameters.AddWithValue("@activo", 0);
+                        command.Parameters.AddWithValue("@cadeteID", cadeteABorrar.Id);
+                        conexion.Open();
+                        command.ExecuteNonQuery();
+                        conexion.Close();
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                var mensaje = "Mensaje de error: " + ex.Message;
+            }
         }
     }
 }

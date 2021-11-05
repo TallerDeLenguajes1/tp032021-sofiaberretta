@@ -68,15 +68,11 @@ namespace Cadeteria.Controllers
 
         public IActionResult eliminarCadete(int id) 
         {
-            for(int i=0; i < _DB.Cadeteria.ListaCadetes.Count(); i++)
+            Cadete cadeteAEliminar = repoCadete.getCadeteById(id);
+
+            if (cadeteAEliminar != null)
             {
-                if(_DB.Cadeteria.ListaCadetes[i].Id == id)
-                {
-                    //borrar
-                    _DB.Cadeteria.ListaCadetes.Remove(_DB.Cadeteria.ListaCadetes[i]);
-                    _DB.BorrarCadete(id);
-                    break;
-                }
+                repoCadete.borrarCadete(cadeteAEliminar);
             }
 
             return View("MostrarCadetes", repoCadete.getAllCadetes());
@@ -84,16 +80,7 @@ namespace Cadeteria.Controllers
 
         public IActionResult modificarCadete(int id)
         {
-            Cadete cadeteAModificar = null;
-            //como iterar en la bd?????????????
-            for (int i = 0; i < _DB.Cadeteria.ListaCadetes.Count(); i++)
-            {
-                if (_DB.Cadeteria.ListaCadetes[i].Id == id)
-                {
-                    cadeteAModificar = _DB.Cadeteria.ListaCadetes[i];
-                    break;
-                }
-            }
+            Cadete cadeteAModificar = repoCadete.getCadeteById(id);
 
             if(cadeteAModificar != null)
             {
@@ -107,33 +94,8 @@ namespace Cadeteria.Controllers
 
         public IActionResult cambiarDatosCadete(int id, string nombre, string direc, string tel)
         {
-            try
-            {
-                if (id > 0)
-                {
-                    Cadete cadeteAModificar = new Cadete();
-                    cadeteAModificar.Nombre = nombre;
-                    cadeteAModificar.Direccion = direc;
-                    cadeteAModificar.Telefono = tel;
-                    _DB.ModificarCadete(cadeteAModificar);
-                    repoCadete.modificarCadete(cadeteAModificar);
-
-                    return View("MostrarCadetes", repoCadete.getAllCadetes());
-                }
-            }
-            catch (Exception ex)
-            {
-                var mensaje = "Mensaje de error: " + ex.Message;
-
-                if (ex.InnerException != null)
-                {
-                    mensaje = mensaje + " Excepcion interna: " + ex.InnerException.Message;
-                }
-
-                mensaje = mensaje + " Sucedio en: " + ex.StackTrace;
-
-                _logger.LogError(mensaje);
-            }
+            Cadete cadeteAModificar = new Cadete(id, nombre, direc, tel);
+            repoCadete.modificarCadete(cadeteAModificar);
 
             return View("MostrarCadetes", repoCadete.getAllCadetes());
         }

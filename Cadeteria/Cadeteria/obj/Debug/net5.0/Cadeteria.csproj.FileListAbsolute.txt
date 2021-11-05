@@ -777,3 +777,4 @@ D:\Facultad\2021\2do-cuatrimestre\Taller de Lenguajes II\tp032021-sofiaberretta\
 D:\Facultad\2021\2do-cuatrimestre\Taller de Lenguajes II\tp032021-sofiaberretta\Cadeteria\Cadeteria\obj\Debug\net5.0\ref\Cadeteria.dll
 D:\Facultad\2021\2do-cuatrimestre\Taller de Lenguajes II\tp032021-sofiaberretta\Cadeteria\Cadeteria\obj\Debug\net5.0\Cadeteria.pdb
 D:\Facultad\2021\2do-cuatrimestre\Taller de Lenguajes II\tp032021-sofiaberretta\Cadeteria\Cadeteria\obj\Debug\net5.0\Cadeteria.genruntimeconfig.cache
+C:\Users\Alumno\Desktop\tp032021-sofiaberretta\Cadeteria\Cadeteria\bin\Debug\net5.0\db\Cadeteria.db

@@ -29,8 +29,10 @@ namespace Cadeteria
         {
             var connectionString = Configuration.GetConnectionString("Default");
             RepositorioCadete repoCadetes = new RepositorioCadete(connectionString);
-            
+            RepositorioPedido repoPedidos= new RepositorioPedido(connectionString);
+
             services.AddSingleton(repoCadetes);
+            services.AddSingleton(repoPedidos);
             services.AddSingleton(NLog.LogManager.GetCurrentClassLogger());
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
             services.AddSingleton(DB);
