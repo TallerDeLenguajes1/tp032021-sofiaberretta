@@ -44,8 +44,9 @@ namespace Cadeteria.Controllers
                 Cadete nuevoCadete = new Cadete(ultimoId, nombre, direc, tel);
                 _DB.Cadeteria.ListaCadetes.Add(nuevoCadete);
                 _DB.GuardarCadete(_DB.Cadeteria.ListaCadetes);
+                repoCadete.guardarCadete(nuevoCadete);
 
-                return View("MostrarCadetes", _DB.Cadeteria.ListaCadetes);
+                return View("MostrarCadetes", repoCadete.getAllCadetes());
 
             }
             catch (Exception ex)
@@ -71,18 +72,20 @@ namespace Cadeteria.Controllers
             {
                 if(_DB.Cadeteria.ListaCadetes[i].Id == id)
                 {
+                    //borrar
                     _DB.Cadeteria.ListaCadetes.Remove(_DB.Cadeteria.ListaCadetes[i]);
                     _DB.BorrarCadete(id);
                     break;
                 }
             }
 
-            return View("MostrarCadetes", _DB.Cadeteria.ListaCadetes);
+            return View("MostrarCadetes", repoCadete.getAllCadetes());
         }
 
         public IActionResult modificarCadete(int id)
         {
             Cadete cadeteAModificar = null;
+            //como iterar en la bd?????????????
             for (int i = 0; i < _DB.Cadeteria.ListaCadetes.Count(); i++)
             {
                 if (_DB.Cadeteria.ListaCadetes[i].Id == id)
@@ -98,7 +101,7 @@ namespace Cadeteria.Controllers
             }
             else
             {
-                return Redirect("MostrarCadetes");
+                return View("MostrarCadetes", repoCadete.getAllCadetes());
             }
         }
 
@@ -113,8 +116,9 @@ namespace Cadeteria.Controllers
                     cadeteAModificar.Direccion = direc;
                     cadeteAModificar.Telefono = tel;
                     _DB.ModificarCadete(cadeteAModificar);
+                    repoCadete.modificarCadete(cadeteAModificar);
 
-                    return View("MostrarCadetes", _DB.Cadeteria.ListaCadetes);
+                    return View("MostrarCadetes", repoCadete.getAllCadetes());
                 }
             }
             catch (Exception ex)
@@ -131,7 +135,7 @@ namespace Cadeteria.Controllers
                 _logger.LogError(mensaje);
             }
 
-            return View("MostrarCadetes", _DB.Cadeteria.ListaCadetes);
+            return View("MostrarCadetes", repoCadete.getAllCadetes());
         }
 
         public IActionResult listarPedidos(int id)

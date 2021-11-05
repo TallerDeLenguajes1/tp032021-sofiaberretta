@@ -49,17 +49,63 @@ namespace Cadeteria.Models
 
         public void guardarCadete(Cadete cadeteAGuardar)
         {
-            
+            try
+            {
+                string instruccion = @"INSERT INTO
+                                        Cadetes (cadeteNombre, cadeteTelefono, cadeteDireccion)
+                                        VALUES (@nombre, @telefono, @direccion)";
+
+                using (var conexion = new SQLiteConnection(connectionString))
+                {
+                    using (SQLiteCommand command = new SQLiteCommand(instruccion, conexion))
+                    {
+                        command.Parameters.AddWithValue("@nombre", cadeteAGuardar.Nombre);
+                        command.Parameters.AddWithValue("@telefono", cadeteAGuardar.Telefono);
+                        command.Parameters.AddWithValue("@direccion", cadeteAGuardar.Direccion);
+                        conexion.Open();
+                        command.ExecuteNonQuery();
+                        conexion.Close();
+                    }
+                }
+
+            } catch (Exception ex)
+            {
+                var mensaje = "Mensaje de error: " + ex.Message;
+            }
         }
 
         public void modificarCadete(Cadete cadeteAModificar)
         {
-            
+            try
+            {
+                string instruccion = @"UPDATE Cadetes
+                                        SET cadeteNombre = @nombre, cadeteTelefono = @telefono, cadeteDireccion = @direccion
+                                        WHERE cadeteID = @cadeteID";
+
+                using (var conexion = new SQLiteConnection(connectionString))
+                {
+                    using (SQLiteCommand command = new SQLiteCommand(instruccion, conexion))
+                    {
+                        command.Parameters.AddWithValue("@nombre", cadeteAModificar.Nombre);
+                        command.Parameters.AddWithValue("@telefono", cadeteAModificar.Telefono);
+                        command.Parameters.AddWithValue("@direccion", cadeteAModificar.Direccion);
+                        command.Parameters.AddWithValue("@cadeteID", cadeteAModificar.Id);
+                        conexion.Open();
+                        command.ExecuteNonQuery();
+                        conexion.Close();
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                var mensaje = "Mensaje de error: " + ex.Message;
+            }
         }
 
         public void borrarrCadete(Cadete cadeteABorrar)
         {
-        
+         // como ??????
         }
     }
 }
