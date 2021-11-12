@@ -12,12 +12,19 @@ namespace Cadeteria.Models
         private Cliente cliente;
         private string estado;
 
-        public Pedidos(int numPedido, string obs, string idCliente, string nombreCliente, string direcCliente, string telCliente, string estado)
+        public Pedidos(int numPedido, string obs, int idCliente, string nombreCliente, string direcCliente, string telCliente, string estado)
         {
             numeroPedido = numPedido;
             observaciones = obs;
             cliente = new Cliente(idCliente, nombreCliente, direcCliente, telCliente);
             this.estado = estado;
+        }
+
+        public Pedidos(string obs, string estado)
+        {
+            observaciones = obs;
+            this.estado = estado;
+            cliente = new Cliente();
         }
 
         public Pedidos()

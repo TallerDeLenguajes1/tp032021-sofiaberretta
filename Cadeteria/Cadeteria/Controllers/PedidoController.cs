@@ -11,11 +11,13 @@ namespace Cadeteria.Controllers
     public class PedidoController : Controller
     {
         private readonly ILogger<PedidoController> _logger;
-        private readonly DBTemporal _DB;
-        public PedidoController(ILogger<PedidoController> logger, DBTemporal DB)
+        private readonly IPedidoDB repoPedido;
+        private readonly IClienteDB repoCliente;
+        public PedidoController(ILogger<PedidoController> logger, IPedidoDB repoPedido, IClienteDB repoCliente)
         {
             _logger = logger;
-            _DB = DB;
+            this.repoPedido = repoPedido;
+            this.repoCliente = repoCliente;
         }
         public IActionResult Index()
         {
@@ -24,22 +26,22 @@ namespace Cadeteria.Controllers
 
         public IActionResult MostrarPedidos()
         {
-            return View(_DB.Cadeteria);
+            return View(repoPedido.getAllPedidos());
         }
 
-        public IActionResult crearPedido(string obs, string estado, string nombreC, string idC, string direcC, string telC)
+        public IActionResult crearPedido(string obs, string estado, string nombreC, string direcC, string telC)
         {
             try
             {
-                int ultimoNum = 100;
-                if (_DB.Cadeteria.ListaPedidos.Count() > 0)
-                {
-                    ultimoNum = _DB.Cadeteria.ListaPedidos.Max(x => x.NumeroPedido);
-                }
-                ultimoNum++;
-                Pedidos nuevoPedido = new Pedidos(ultimoNum, obs, idC, nombreC, direcC, telC, estado);
-                _DB.Cadeteria.ListaPedidos.Add(nuevoPedido);
-                _DB.GuardarPedido(_DB.Cadeteria.ListaPedidos);
+                Cliente nuevoCliente = new Cliente(nombreC, direcC, telC);
+                repoCliente.guardarCliente(nuevoCliente);
+
+                nuevoCliente.Id = repoCliente.getLastIDCliente();
+
+                Pedidos nuevoPedido = new Pedidos(obs, estado);
+                nuevoPedido.Cliente = nuevoCliente;
+
+                repoPedido.guardarPedido(nuevoPedido);
             }
             catch (Exception ex)
             {
@@ -55,10 +57,10 @@ namespace Cadeteria.Controllers
                 _logger.LogError(mensaje);
             }
             
-            return View("MostrarPedidos", _DB.Cadeteria);
+            return View("MostrarPedidos", repoPedido.getAllPedidos());
         }
 
-        public IActionResult AsignarCadete(int idPedido, int idCadete)
+        /*public IActionResult AsignarCadete(int idPedido, int idCadete)
         {
             QuitarPedidoDeCadete(idPedido);
 
@@ -75,9 +77,9 @@ namespace Cadeteria.Controllers
             }
 
             return View("MostrarPedidos", _DB.Cadeteria);
-        }
+        }*/
 
-        private void QuitarPedidoDeCadete(int idPedido)
+        /*private void QuitarPedidoDeCadete(int idPedido)
         {
             Pedidos pedidoSeleccionado = _DB.Cadeteria.ListaPedidos.Find(x => x.NumeroPedido == idPedido);
             foreach (var cadete in _DB.Cadeteria.ListaCadetes)
@@ -93,34 +95,23 @@ namespace Cadeteria.Controllers
             }
             
             _DB.GuardarCadete(_DB.Cadeteria.ListaCadetes);
-        }
+        }*/
 
         public IActionResult eliminarPedido(int NumeroPedido)
         {
-            for (int i = 0; i < _DB.Cadeteria.ListaPedidos.Count(); i++)
+            Pedidos pedidoAEliminar = repoPedido.getPedidoById(NumeroPedido);
+
+            if (pedidoAEliminar != null)
             {
-                if (_DB.Cadeteria.ListaPedidos[i].NumeroPedido == NumeroPedido)
-                {
-                    _DB.Cadeteria.ListaPedidos.Remove(_DB.Cadeteria.ListaPedidos[i]);
-                    _DB.BorrarPedido(NumeroPedido);
-                    break;
-                }
+                repoPedido.borrarPedido(pedidoAEliminar);
             }
 
-            return View("MostrarPedidos", _DB.Cadeteria);
+            return View("MostrarPedidos", repoPedido.getAllPedidos());
         }
 
         public IActionResult modificarPedido(int NumeroPedido)
         {
-            Pedidos pedidoAModificar = null;
-            for (int i = 0; i < _DB.Cadeteria.ListaPedidos.Count(); i++)
-            {
-                if (_DB.Cadeteria.ListaPedidos[i].NumeroPedido == NumeroPedido)
-                {
-                    pedidoAModificar = _DB.Cadeteria.ListaPedidos[i];
-                    break;
-                }
-            }
+            Pedidos pedidoAModificar = repoPedido.getPedidoById(NumeroPedido);
 
             if (pedidoAModificar != null)
             {
@@ -128,11 +119,11 @@ namespace Cadeteria.Controllers
             }
             else
             {
-                return View("MostrarPedidos", _DB.Cadeteria);
+                return View("MostrarPedidos", repoPedido.getAllPedidos());
             }
         }
 
-        public IActionResult cambiarDatosPedido(int numPedido, string obs, string estado, string nombreC, string idC, string direcC, string telC)
+        public IActionResult cambiarDatosPedido(int numPedido, string obs, string estado, string nombreC, string direcC, string telC)
         {
             try
             {
@@ -143,12 +134,11 @@ namespace Cadeteria.Controllers
                     pedidoAModificar.Observaciones = obs;
                     pedidoAModificar.Estado = estado;
                     pedidoAModificar.Cliente.Nombre = nombreC;
-                    pedidoAModificar.Cliente.Id = idC;
                     pedidoAModificar.Cliente.Direccion = direcC;
                     pedidoAModificar.Cliente.Telefono = telC;
 
-                    _DB.ModificarPedido(pedidoAModificar);
-                    return View("MostrarPedidos", _DB.Cadeteria);//No se modifica en la vista
+                    repoPedido.modificarPedido(pedidoAModificar);
+                    return View("MostrarPedidos", repoPedido.getAllPedidos());
                 }
             }
             catch (Exception ex)
@@ -165,7 +155,7 @@ namespace Cadeteria.Controllers
                 _logger.LogError(mensaje);
             }
             
-            return View("MostrarPedidos", _DB.Cadeteria);
+            return View("MostrarPedidos", repoPedido.getAllPedidos());
             
         }
     }

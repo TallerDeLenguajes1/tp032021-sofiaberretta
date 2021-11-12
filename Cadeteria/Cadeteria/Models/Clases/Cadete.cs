@@ -24,6 +24,15 @@ namespace Cadeteria.Models
             CantPedidosPagados = 0;
         }
 
+        public Cadete(string nombre, string direccion, string telefono)
+        {
+            Nombre = nombre;
+            Direccion = direccion;
+            Telefono = telefono;
+            ListadoPedidos = new List<Pedidos>();
+            CantPedidosPagados = 0;
+        }
+
         public Cadete() 
         { 
         

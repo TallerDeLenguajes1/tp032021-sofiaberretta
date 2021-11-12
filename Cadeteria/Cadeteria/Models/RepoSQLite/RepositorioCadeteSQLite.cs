@@ -6,97 +6,76 @@ using System.Data.SQLite;
 
 namespace Cadeteria.Models
 {
-    public class RepositorioPedido
+    public class RepositorioCadeteSQLite : ICadeteDB
     {
         private readonly string connectionString;
         private readonly SQLiteConnection conexion;
 
-        public RepositorioPedido(string connectionString)
+        public RepositorioCadeteSQLite(string connectionString)
         {
             this.connectionString = connectionString;
         }
 
-        public List<Pedidos> getAllPedidos()
+        public List<Cadete> getAllCadetes()
         {
-            List<Pedidos> listadoPedidos = new List<Pedidos>();
+            List<Cadete> listadoCadetes = new List<Cadete>();
 
-            using(SQLiteConnection conexion = new SQLiteConnection(connectionString))
+            using (SQLiteConnection conexion = new SQLiteConnection(connectionString))
             {
                 conexion.Open();
 
-                string instruccionSQL = "SELECT * FROM Pedidos WHERE activo = 1" +
-                                        "INNER JOIN Clientes USING(clienteId);";
-
-                SQLiteCommand command = new SQLiteCommand(instruccionSQL, conexion);
-
-                var dataReader = command.ExecuteReader();
-                while(dataReader.Read())
-                {
-                    Pedidos pedido = new Pedidos()
-                    {
-                        NumeroPedido = Convert.ToInt32(dataReader["pedidoID"]),
-                        Observaciones = dataReader["pedidoObs"].ToString(),
-                        Estado = dataReader["pedidoEstado"].ToString(),
-                    };
-
-                    Cliente cliente = new Cliente()
-                    {
-                        Id = dataReader["clienteID"].ToString(),
-                        Nombre = dataReader["clienteNombre"].ToString(),
-                        Direccion = dataReader["clienteDireccion"].ToString(),
-                        Telefono = dataReader["clienteTelefono"].ToString()
-                    };
-
-                    pedido.Cliente = cliente;
-
-                    listadoPedidos.Add(pedido);
-                }
-
-                conexion.Close();
-            }
-
-            return listadoPedidos;
-        }
-
-
-        public Pedidos getPedidoById(int id)
-        {
-            Pedidos pedidoBuscado = null;
-
-            using(SQLiteConnection conexion = new SQLiteConnection(connectionString))
-            {
-                conexion.Open();
-
-                string instruccionSQL = "SELECT * FROM Pedidos WHERE pedidoID = @idPedido" +
-                                        "INNER JOIN Clientes USING(clienteId);";
-
+                string instruccionSQL = "SELECT * FROM Cadetes WHERE activo = 1;";
                 SQLiteCommand command = new SQLiteCommand(instruccionSQL, conexion);
 
                 var dataReader = command.ExecuteReader();
                 while (dataReader.Read())
                 {
-                    pedidoBuscado = new Pedidos()
+                    Cadete cadete = new Cadete()
                     {
-                        NumeroPedido = Convert.ToInt32(dataReader["pedidoID"]),
-                        Observaciones = dataReader["pedidoObs"].ToString(),
-                        Estado = dataReader["pedidoEstado"].ToString(),
+                        Id = Convert.ToInt32(dataReader["cadeteID"]),
+                        Nombre = dataReader["cadeteNombre"].ToString(),
+                        Telefono = dataReader["cadeteTelefono"].ToString(),
+                        Direccion = dataReader["cadeteDireccion"].ToString(),
                     };
 
-                    Cliente cliente = new Cliente()
-                    {
-                        Id = dataReader["clienteID"].ToString(),
-                        Nombre = dataReader["clienteNombre"].ToString(),
-                        Direccion = dataReader["clienteDireccion"].ToString(),
-                        Telefono = dataReader["clienteTelefono"].ToString()
-                    };
-
-                    pedidoBuscado.Cliente = cliente;
+                    listadoCadetes.Add(cadete);
                 }
 
                 conexion.Close();
             }
 
-            return pedidoBuscado;
+            return listadoCadetes;
+        }
+
+
+        public Cadete getCadeteById(int id)
+        {
+            Cadete cadeteBuscado = null;
+            using (SQLiteConnection conexion = new SQLiteConnection(connectionString))
+            {
+                conexion.Open();
+
+                string instruccionSQL = "SELECT * FROM Cadetes WHERE cadeteID = @idCadete;";
+                SQLiteCommand command = new SQLiteCommand(instruccionSQL, conexion);
+
+                command.Parameters.AddWithValue("@idCadete", id);
+
+                var dataReader = command.ExecuteReader();
+                while (dataReader.Read())
+                {
+                    cadeteBuscado = new Cadete()
+                    {
+                        Id = Convert.ToInt32(dataReader["cadeteID"]),
+                        Nombre = dataReader["cadeteNombre"].ToString(),
+                        Telefono = dataReader["cadeteTelefono"].ToString(),
+                        Direccion = dataReader["cadeteDireccion"].ToString(),
+                    };
+                }
+
+                conexion.Close();
+            }
+
+            return cadeteBuscado;
         }
 
 
@@ -121,7 +100,8 @@ namespace Cadeteria.Models
                     }
                 }
 
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 var mensaje = "Mensaje de error: " + ex.Message;
             }

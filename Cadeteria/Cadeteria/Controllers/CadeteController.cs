@@ -11,13 +11,11 @@ namespace Cadeteria.Controllers
     public class CadeteController : Controller
     {
         private readonly ILogger<CadeteController> _logger;
-        private readonly DBTemporal _DB;
-        private readonly RepositorioCadete repoCadete;
+        private readonly ICadeteDB repoCadete;
 
-        public CadeteController(ILogger<CadeteController> logger, DBTemporal DB, RepositorioCadete repoCadete)
+        public CadeteController(ILogger<CadeteController> logger, ICadeteDB repoCadete)
         {
             _logger = logger;
-            _DB = DB;
             this.repoCadete = repoCadete;
         }
         
@@ -35,15 +33,7 @@ namespace Cadeteria.Controllers
         {
             try
             {
-                int ultimoId = 0;
-                if (_DB.Cadeteria.ListaCadetes.Count() > 0)
-                {
-                    ultimoId = _DB.Cadeteria.ListaCadetes.Max(x => x.Id);
-                }
-                ultimoId++;
-                Cadete nuevoCadete = new Cadete(ultimoId, nombre, direc, tel);
-                _DB.Cadeteria.ListaCadetes.Add(nuevoCadete);
-                _DB.GuardarCadete(_DB.Cadeteria.ListaCadetes);
+                Cadete nuevoCadete = new Cadete(nombre, direc, tel);
                 repoCadete.guardarCadete(nuevoCadete);
 
                 return View("MostrarCadetes", repoCadete.getAllCadetes());
@@ -100,7 +90,7 @@ namespace Cadeteria.Controllers
             return View("MostrarCadetes", repoCadete.getAllCadetes());
         }
 
-        public IActionResult listarPedidos(int id)
+        /*public IActionResult listarPedidos(int id)
         {
             Cadete cadeteAListar = null;
             for (int i = 0; i < _DB.Cadeteria.ListaCadetes.Count(); i++)
@@ -120,9 +110,9 @@ namespace Cadeteria.Controllers
             {
                 return Redirect("MostrarCadetes");
             }
-        }
+        }*/
 
-        public IActionResult pagarCadete(int id)
+        /*public IActionResult pagarCadete(int id)
         {
             Cadete cadeteAPagar = null;
             for (int i = 0; i < _DB.Cadeteria.ListaCadetes.Count(); i++)
@@ -156,7 +146,7 @@ namespace Cadeteria.Controllers
             {
                 return Redirect("ListarPedidos");
             }
-        }
+        }*/
 
     }
 

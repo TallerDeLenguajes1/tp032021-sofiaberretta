@@ -16,7 +16,7 @@ namespace Cadeteria
 {
     public class Startup
     {
-        static readonly DBTemporal DB = new DBTemporal(NLogBuilder.ConfigureNLog("nlog.config").GetCurrentClassLogger());
+        
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -28,14 +28,17 @@ namespace Cadeteria
         public void ConfigureServices(IServiceCollection services)
         {
             var connectionString = Configuration.GetConnectionString("Default");
-            RepositorioCadete repoCadetes = new RepositorioCadete(connectionString);
-            RepositorioPedido repoPedidos= new RepositorioPedido(connectionString);
+
+            ICadeteDB repoCadetes = new RepositorioCadeteSQLite(connectionString);
+            IPedidoDB repoPedidos = new RepositorioPedidoSQLite(connectionString);
+            IClienteDB repoClientes = new RepositorioClienteSQLite(connectionString);
 
             services.AddSingleton(repoCadetes);
             services.AddSingleton(repoPedidos);
+            services.AddSingleton(repoClientes);
             services.AddSingleton(NLog.LogManager.GetCurrentClassLogger());
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
-            services.AddSingleton(DB);
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Cadeteria.Models
 {
-    public class DBTemporal : ICadetesDB, IPedidosDB
+    public class DBTemporal
     {
         private readonly ILogger _logger;
         private Cadeteria cadeteria;
