@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Cadeteria.Models
 {
-    public class DBTemporal
+    public class DBTemporal : ICadetesDB, IPedidosDB
     {
         private readonly ILogger _logger;
         private Cadeteria cadeteria;
@@ -21,7 +21,7 @@ namespace Cadeteria.Models
 
             Cadeteria = new Cadeteria();
 
-            if(GetListCadetes() != null)
+            if (GetListCadetes() != null)
             {
                 Cadeteria.ListaCadetes = GetListCadetes();
             }
@@ -39,9 +39,9 @@ namespace Cadeteria.Models
             try
             {
                 string cadetesJson = JsonSerializer.Serialize(cadetes);
-                using(FileStream miArchivo = new FileStream(ubicacionCadetes, FileMode.Create))
+                using (FileStream miArchivo = new FileStream(ubicacionCadetes, FileMode.Create))
                 {
-                    using(StreamWriter strWrite = new StreamWriter(miArchivo))
+                    using (StreamWriter strWrite = new StreamWriter(miArchivo))
                     {
                         strWrite.Write(cadetesJson);
                         strWrite.Close();
@@ -52,7 +52,8 @@ namespace Cadeteria.Models
                 string info = "Se guardo exitosamente los datos del cadete";
                 _logger.Info(info);
 
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 var mensaje = "Mensaje de error: " + ex.Message;
 
@@ -72,18 +73,19 @@ namespace Cadeteria.Models
             List<Cadete> cadetesJson = null;
             try
             {
-                if(File.Exists(ubicacionCadetes))
+                if (File.Exists(ubicacionCadetes))
                 {
-                    using(FileStream miArchivo = new FileStream(ubicacionCadetes, FileMode.Open))
+                    using (FileStream miArchivo = new FileStream(ubicacionCadetes, FileMode.Open))
                     {
-                        using(StreamReader strReader = new StreamReader(miArchivo))
+                        using (StreamReader strReader = new StreamReader(miArchivo))
                         {
                             string strCadetes = strReader.ReadToEnd();
                             cadetesJson = JsonSerializer.Deserialize<List<Cadete>>(strCadetes);
                         }
                     }
                 }
-            } catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 var mensaje = "Mensaje de error: " + ex.Message;
 
@@ -165,15 +167,15 @@ namespace Cadeteria.Models
         }
 
         //------------------------ PEDIDOS ------------------------
-        
-         public void GuardarPedido(List<Pedidos> pedidos)
+
+        public void GuardarPedido(List<Pedidos> pedidos)
         {
             try
             {
                 string pedidosJson = JsonSerializer.Serialize(pedidos);
-                using(FileStream miArchivo = new FileStream(ubicacionPedidos, FileMode.Create))
+                using (FileStream miArchivo = new FileStream(ubicacionPedidos, FileMode.Create))
                 {
-                    using(StreamWriter strWrite = new StreamWriter(miArchivo))
+                    using (StreamWriter strWrite = new StreamWriter(miArchivo))
                     {
                         strWrite.Write(pedidosJson);
                         strWrite.Close();
@@ -184,7 +186,8 @@ namespace Cadeteria.Models
                 string info = "Se guardo exitosamente los datos del pedido";
                 _logger.Info(info);
 
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 var mensaje = "Mensaje de error: " + ex.Message;
 
@@ -204,18 +207,19 @@ namespace Cadeteria.Models
             List<Pedidos> pedidosJson = null;
             try
             {
-                if(File.Exists(ubicacionPedidos))
+                if (File.Exists(ubicacionPedidos))
                 {
-                    using(FileStream miArchivo = new FileStream(ubicacionPedidos, FileMode.Open))
+                    using (FileStream miArchivo = new FileStream(ubicacionPedidos, FileMode.Open))
                     {
-                        using(StreamReader strReader = new StreamReader(miArchivo))
+                        using (StreamReader strReader = new StreamReader(miArchivo))
                         {
                             string strPedidos = strReader.ReadToEnd();
                             pedidosJson = JsonSerializer.Deserialize<List<Pedidos>>(strPedidos);
                         }
                     }
                 }
-            } catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 var mensaje = "Mensaje de error: " + ex.Message;
 
