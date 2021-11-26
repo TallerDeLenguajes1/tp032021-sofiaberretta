@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using Cadeteria.Models;
+using Cadeteria.Models.Clases;
 using Cadeteria.Models.ViewModels.Cadete;
 using Cadeteria.Models.ViewModels.Pedidos;
+using Cadeteria.Models.ViewModels.Usuario;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +29,10 @@ namespace Cadeteria
 
             //Map de cliente
             CreateMap<Cliente, ClienteViewModel>().ReverseMap();
+
+            //Maps de usuarios
+            CreateMap<Usuario, UsuarioIndexViewModel>().ReverseMap();
+            CreateMap<Usuario, UsuarioAltaViewModel>().ReverseMap();
         }
     }
 }

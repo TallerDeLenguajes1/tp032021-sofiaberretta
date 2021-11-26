@@ -780,3 +780,5 @@ D:\Facultad\2021\2do-cuatrimestre\Taller de Lenguajes II\tp032021-sofiaberretta\
 C:\Users\Alumno\Desktop\tp032021-sofiaberretta\Cadeteria\Cadeteria\bin\Debug\net5.0\db\Cadeteria.db
 D:\Facultad\2021\2do-cuatrimestre\Taller de Lenguajes II\tp032021-sofiaberretta\Cadeteria\Cadeteria\bin\Debug\net5.0\AutoMapper.dll
 D:\Facultad\2021\2do-cuatrimestre\Taller de Lenguajes II\tp032021-sofiaberretta\Cadeteria\Cadeteria\bin\Debug\net5.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+D:\Facultad\2021\2do-cuatrimestre\Taller de Lenguajes II\tp032021-sofiaberretta\Cadeteria\Cadeteria\obj\Debug\net5.0\Razor\Views\Usuario\CrearUsuario.cshtml.g.cs
+D:\Facultad\2021\2do-cuatrimestre\Taller de Lenguajes II\tp032021-sofiaberretta\Cadeteria\Cadeteria\obj\Debug\net5.0\Razor\Views\Usuario\Index.cshtml.g.cs

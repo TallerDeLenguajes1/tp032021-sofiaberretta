@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Cadeteria.Models;
 using AutoMapper;
 using Cadeteria.Models.ViewModels.Cadete;
+using Microsoft.AspNetCore.Http;
 
 namespace Cadeteria.Controllers
 {
@@ -26,7 +27,14 @@ namespace Cadeteria.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            return View(new CadeteAltaViewModel());
+            if (HttpContext.Session.GetInt32("ID") != null)
+            {
+                return View(new CadeteAltaViewModel());
+            }
+            else
+            {
+                return RedirectToAction("Index", "Usuario");
+            }
         }
 
         public IActionResult MostrarCadetes()
@@ -88,17 +96,24 @@ namespace Cadeteria.Controllers
         [HttpGet]
         public IActionResult modificarCadete(int id)
         {
-            Cadete cadeteAModificar = repoCadete.getCadeteById(id);
-            
-
-            if (cadeteAModificar != null)
+            if (HttpContext.Session.GetInt32("ID") != null)
             {
-                var cadeteVM = mapper.Map<CadeteModificarViewModel>(cadeteAModificar);
-                return View("ModificarCadete", cadeteVM);
+                Cadete cadeteAModificar = repoCadete.getCadeteById(id);
+
+
+                if (cadeteAModificar != null)
+                {
+                    var cadeteVM = mapper.Map<CadeteModificarViewModel>(cadeteAModificar);
+                    return View("ModificarCadete", cadeteVM);
+                }
+                else
+                {
+                    return RedirectToAction(nameof(MostrarCadetes));
+                }
             }
             else
             {
-                return RedirectToAction(nameof(MostrarCadetes));
+                return RedirectToAction("Index", "Usuario");
             }
         }
 

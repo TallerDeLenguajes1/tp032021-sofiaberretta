@@ -8,6 +8,7 @@ using Cadeteria.Models;
 using AutoMapper;
 using Cadeteria.Models.ViewModels.Pedidos;
 using Cadeteria.Models.ViewModels.Cadete;
+using Microsoft.AspNetCore.Http;
 
 namespace Cadeteria.Controllers
 {
@@ -28,15 +29,23 @@ namespace Cadeteria.Controllers
         }
         public IActionResult Index()
         {
-            PedidosAltaViewModel pedidos = new PedidosAltaViewModel();
-
-            pedidos.Estados = new List<string>()
+            if (HttpContext.Session.GetInt32("ID") != null)
             {
+                PedidosAltaViewModel pedidos = new PedidosAltaViewModel();
+
+                pedidos.Estados = new List<string>()
+                {
                     "Pendiente",
                     "Entregado"
-            };
+                };
 
-            return View(pedidos);
+                return View(pedidos);
+            }
+            else
+            {
+                return RedirectToAction("Index", "Usuario");
+            }
+            
         }
 
         public IActionResult MostrarPedidos()
@@ -99,16 +108,23 @@ namespace Cadeteria.Controllers
         [HttpGet]
         public IActionResult modificarPedido(int NumeroPedido)
         {
-            Pedidos pedidoAModificar = repoPedido.getPedidoById(NumeroPedido);
-
-            if (pedidoAModificar != null)
+            if (HttpContext.Session.GetInt32("ID") != null)
             {
-                var pedidoVM = mapper.Map<PedidosModificarViewModel>(pedidoAModificar);
-                return View("ModificarPedido", pedidoVM);
+                Pedidos pedidoAModificar = repoPedido.getPedidoById(NumeroPedido);
+
+                if (pedidoAModificar != null)
+                {
+                    var pedidoVM = mapper.Map<PedidosModificarViewModel>(pedidoAModificar);
+                    return View("ModificarPedido", pedidoVM);
+                }
+                else
+                {
+                    return RedirectToAction(nameof(MostrarPedidos));
+                }
             }
             else
             {
-                return RedirectToAction(nameof(MostrarPedidos));
+                return RedirectToAction("Index", "Usuario");
             }
         }
 

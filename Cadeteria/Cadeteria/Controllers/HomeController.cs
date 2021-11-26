@@ -1,4 +1,6 @@
 ﻿using Cadeteria.Models;
+using Cadeteria.Models.Clases;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using NLog;
