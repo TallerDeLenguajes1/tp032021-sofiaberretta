@@ -1,8 +1,9 @@
-﻿@{
+﻿@using Cadeteria.Models.ViewModels.Cadete
+@{
     ViewData["Title"] = "Listado Cadetes";
 }
 
-@model List<Cadete>
+@model CadeteMostrarViewModel
 
 <h1 class="display-4">Listado de Cadetes</h1>
 <div class="col-12">
@@ -21,28 +22,30 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
+        @foreach (var item in Model.listaCadetes)
         {
             <tr>
                 <th scope="row" class="table-primary">@item.Id</th>
                 <td>@item.Nombre</td>
                 <td>@item.Direccion</td>
                 <td>@item.Telefono</td>
-                @if(item.ListadoPedidos != null)
+                @if (item.ListadoPedidos != null)
                 {
                     <td>
                         <a class="nav-link" asp-route-id="@item.Id" asp-action="listarPedidos">Pedidos @item.ListadoPedidos.Count() </a>
                     </td>
-                }else{
+                }
+                else
+                {
                     <td>Sin pedidos</td>
                 }
                 <td>
                     <a class="nav-link" asp-route-id="@item.Id" asp-controller="Cadete" asp-action="modificarCadete">Modificar</a>
                     <a class="nav-link" asp-route-id="@item.Id" asp-controller="Cadete" asp-action="eliminarCadete" onclick="return confirm('¿Seguro que desea eliminar al cadete @item.Nombre?')">
-                    Eliminar
+                        Eliminar
                     </a>
                 </td>
             </tr>
-         }
+        }
     </tbody>
 </table>

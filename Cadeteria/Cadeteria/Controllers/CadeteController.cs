@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Cadeteria.Models;
+using AutoMapper;
+using Cadeteria.Models.ViewModels.Cadete;
 
 namespace Cadeteria.Controllers
 {
@@ -12,32 +14,47 @@ namespace Cadeteria.Controllers
     {
         private readonly ILogger<CadeteController> _logger;
         private readonly ICadeteDB repoCadete;
+        private readonly IMapper mapper;
 
-        public CadeteController(ILogger<CadeteController> logger, ICadeteDB repoCadete)
+        public CadeteController(ILogger<CadeteController> logger, ICadeteDB repoCadete, IMapper mapper)
         {
             _logger = logger;
             this.repoCadete = repoCadete;
+            this.mapper = mapper;
         }
-        
+
+        [HttpGet]
         public IActionResult Index()
         {
-            return View();
+            return View(new CadeteAltaViewModel());
         }
 
         public IActionResult MostrarCadetes()
         {
-            return View(repoCadete.getAllCadetes());
+            List<Cadete> listaCadetes = repoCadete.getAllCadetes();
+            var listaCadetesVM = mapper.Map<List<CadeteViewModel>>(listaCadetes);
+
+            CadeteMostrarViewModel mostrarCadetesVM = new()
+            {
+                listaCadetes = listaCadetesVM
+            };
+
+            return View(mostrarCadetesVM);
         }
 
-        public IActionResult crearCadete(string nombre, string direc, string tel)
+        [HttpPost]
+        public IActionResult crearCadete(CadeteAltaViewModel cadete)
         {
             try
             {
-                Cadete nuevoCadete = new Cadete(nombre, direc, tel);
-                repoCadete.guardarCadete(nuevoCadete);
+                if (ModelState.IsValid)
+                {
+                    Cadete nuevoCadete = mapper.Map<Cadete>(cadete);
+                    repoCadete.guardarCadete(nuevoCadete);
 
-                return View("MostrarCadetes", repoCadete.getAllCadetes());
-
+                    return RedirectToAction(nameof(MostrarCadetes));
+                }
+                
             }
             catch (Exception ex)
             {
@@ -65,29 +82,36 @@ namespace Cadeteria.Controllers
                 repoCadete.borrarCadete(cadeteAEliminar);
             }
 
-            return View("MostrarCadetes", repoCadete.getAllCadetes());
+            return RedirectToAction(nameof(MostrarCadetes));
         }
 
+        [HttpGet]
         public IActionResult modificarCadete(int id)
         {
             Cadete cadeteAModificar = repoCadete.getCadeteById(id);
+            
 
-            if(cadeteAModificar != null)
+            if (cadeteAModificar != null)
             {
-                return View("ModificarCadete", cadeteAModificar);
+                var cadeteVM = mapper.Map<CadeteModificarViewModel>(cadeteAModificar);
+                return View("ModificarCadete", cadeteVM);
             }
             else
             {
-                return View("MostrarCadetes", repoCadete.getAllCadetes());
+                return RedirectToAction(nameof(MostrarCadetes));
             }
         }
 
-        public IActionResult cambiarDatosCadete(int id, string nombre, string direc, string tel)
+        [HttpPost]
+        public IActionResult cambiarDatosCadete(CadeteModificarViewModel cadete)
         {
-            Cadete cadeteAModificar = new Cadete(id, nombre, direc, tel);
-            repoCadete.modificarCadete(cadeteAModificar);
+            if (ModelState.IsValid) // ERROR: da falso
+            {
+                Cadete cadeteAModificar = mapper.Map<Cadete>(cadete);
+                repoCadete.modificarCadete(cadeteAModificar);
+            }
 
-            return View("MostrarCadetes", repoCadete.getAllCadetes());
+            return RedirectToAction(nameof(MostrarCadetes));
         }
 
         /*public IActionResult listarPedidos(int id)

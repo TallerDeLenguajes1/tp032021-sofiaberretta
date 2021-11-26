@@ -1,31 +1,29 @@
 ﻿@{
     ViewData["Title"] = "Modificar Pedido";
 }
-@model Pedidos
+@using Cadeteria.Models.ViewModels.Pedidos
+
+@model PedidosModificarViewModel
 
 <div class="text-center">
     <h1 class="display-4">Modificar datos del Pedido @Model.NumeroPedido</h1>
     <form asp-controller="Pedido" asp-action="cambiarDatosPedido" method="post" class="row g-3">
-        <input type="hidden" class="form-control" id="numPedido" name="numPedido" value="@Model.NumeroPedido" required>
+        <input type="hidden" class="form-control" asp-for="NumeroPedido" value="@Model.NumeroPedido" >
         <div class="col-12">
-            <label for="obs" class="form-label">Observaciones</label>
-            <input type="text" class="form-control" id="obs" name="obs" value="@Model.Observaciones" required>
+            <label asp-for="Observaciones" class="form-label"></label>
+            <input asp-for="Observaciones" class="form-control" value="@Model.Observaciones">
         </div>
         <div class="col-md-6">
-            <label for="nombre" class="form-label">Nombre cliente</label>
-            <input type="text" class="form-control" id="nombre" name="nombreC" value="@Model.Cliente.Nombre" required>
-        </div>
-        <div class="col-md-6">
-            <label for="id" class="form-label">DNI/CUIT cliente</label>
-            <input type="text" class="form-control" id="id" name="idC" value="@Model.Cliente.Id" required>
+            <label asp-for="NombreCliente" class="form-label"></label>
+            <input asp-for="NombreCliente" class="form-control" value="@Model.NombreCliente">
         </div>
         <div class="col-md-6">
             <label for="direc" class="form-label">Direccion cliente</label>
-            <input type="text" class="form-control" id="direc" name="direcC" value="@Model.Cliente.Direccion" required>
+            <input type="text" class="form-control" id="direc" name="direcC" value="@Model.DireccionCliente" required>
         </div>
         <div class="col-md-6">
             <label for="tel" class="form-label">Telefono cliente</label>
-            <input type="text" class="form-control" id="tel" name="telC" placeholder="+54 381-5123123" value="@Model.Cliente.Telefono" required>
+            <input type="text" class="form-control" id="tel" name="telC" placeholder="3815123123" value="@Model.TelefonoCliente" required>
         </div>
         <div class="col-md-4">
             <label for="estado" class="form-label">Estado pedido</label>

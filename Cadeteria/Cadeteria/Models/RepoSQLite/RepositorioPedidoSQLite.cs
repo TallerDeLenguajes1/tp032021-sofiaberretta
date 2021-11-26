@@ -66,10 +66,11 @@ namespace Cadeteria.Models
             {
                 conexion.Open();
 
-                string instruccionSQL = "SELECT * FROM Pedidos WHERE pedidoID = @idPedido" +
-                                        "INNER JOIN Clientes USING(clienteId);";
+                string instruccionSQL = "SELECT * FROM Pedidos INNER JOIN Clientes USING(clienteId) WHERE pedidoID = @idPedido;";
 
                 SQLiteCommand command = new SQLiteCommand(instruccionSQL, conexion);
+
+                command.Parameters.AddWithValue("@idPedido", id);
 
                 var dataReader = command.ExecuteReader();
                 while (dataReader.Read())

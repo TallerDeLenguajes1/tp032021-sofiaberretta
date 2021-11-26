@@ -55,7 +55,7 @@ namespace Cadeteria.Models
             {
                 conexion.Open();
 
-                string instruccionSQL = "SELECT clienteID FROM Clientes WHERE clienteActivo = 1 ORDER BY clienteID DESC LIMIT 1;";
+                string instruccionSQL = "SELECT clienteID FROM Clientes WHERE activo = 1 ORDER BY clienteID DESC LIMIT 1;";
                 SQLiteCommand command = new SQLiteCommand(instruccionSQL, conexion);
 
                 var dataReader = command.ExecuteReader();

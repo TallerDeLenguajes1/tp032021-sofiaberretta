@@ -2,31 +2,36 @@
     ViewData["Title"] = "Pedido";
 }
 
+@using Cadeteria.Models.ViewModels.Pedidos
+
+@model PedidosAltaViewModel
+
 <div class="text-center">
     <h1 class="display-4">Ingresar datos del Pedido</h1>
     <form asp-controller="Pedido" asp-action="crearPedido" method="post" class="row g-3">
         <div class="col-12">
-            <label for="obs" class="form-label">Observaciones</label>
-            <input type="text" class="form-control" id="obs" name="obs" required>
+            <label asp-for="Observaciones" class="form-label"></label>
+            <input asp-for="Observaciones" class="form-control">
+            <span asp-validation-for="Observaciones" class="text-danger"></span>
         </div>
         <div class="col-md-6">
-            <label for="nombre" class="form-label">Nombre cliente</label>
-            <input type="text" class="form-control" id="nombre" name="nombreC" required>
+            <label asp-for="Cliente.Nombre" class="form-label"></label>
+            <input asp-for="Cliente.Nombre" class="form-control">
+            <span asp-validation-for="Cliente.Nombre" class="text-danger"></span>
         </div>
         <div class="col-md-6">
-            <label for="direc" class="form-label">Direccion cliente</label>
-            <input type="text" class="form-control" id="direc" name="direcC" required>
+            <label asp-for="Cliente.Direccion" class="form-label"></label>
+            <input asp-for="Cliente.Direccion" class="form-control">
+            <span asp-validation-for="Cliente.Direccion" class="text-danger"></span>
         </div>
         <div class="col-md-6">
-            <label for="tel" class="form-label">Telefono cliente</label>
-            <input type="text" class="form-control" id="tel" name="telC" placeholder="+54 381-5123123" required>
+            <label asp-for="Cliente.Telefono" class="form-label"></label>
+            <input asp-for="Cliente.Telefono" class="form-control" placeholder="3815123123">
+            <span asp-validation-for="Cliente.Telefono" class="text-danger"></span>
         </div>
         <div class="col-md-4">
-            <label for="estado" class="form-label">Estado pedido</label>
-            <select id="estado" name="estado" class="form-select">
-                <option selected>Pendiente</option>
-                <option>Entregado</option>
-            </select>
+            <label asp-for="Estado" class="form-label"></label>
+            <select asp-items="@(new SelectList(Model.Estados))" asp-for="Estado"></select>
         </div>
         <div class="col-12">
             <button type="submit" class="btn btn-success">Ingresar</button>

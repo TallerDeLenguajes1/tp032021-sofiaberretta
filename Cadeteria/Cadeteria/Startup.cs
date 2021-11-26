@@ -33,6 +33,8 @@ namespace Cadeteria
             IPedidoDB repoPedidos = new RepositorioPedidoSQLite(connectionString);
             IClienteDB repoClientes = new RepositorioClienteSQLite(connectionString);
 
+            services.AddAutoMapper(typeof(Cadeteria.PerfilDeMapeo));
+
             services.AddSingleton(repoCadetes);
             services.AddSingleton(repoPedidos);
             services.AddSingleton(repoClientes);

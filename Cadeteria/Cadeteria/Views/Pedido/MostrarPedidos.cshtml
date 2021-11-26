@@ -1,7 +1,9 @@
 ﻿@{
     ViewData["Title"] = "Listado Pedidos";
 }
-@model Cadeteria
+@using Cadeteria.Models.ViewModels.Pedidos
+
+@model PedidosMostrarViewModel
 
 <h1 class="display-4">Listado de Pedidos</h1>
 <div class="col-12">
@@ -23,43 +25,43 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model.ListaPedidos)
+        @foreach (var item in Model.listaPedidos)
         {
-        <tr>
-            <th scope="row" class="table-success">@item.NumeroPedido</th>
-            <td>@item.Observaciones</td>
-            <td>@item.Estado</td>
-            <td>@item.Cliente.Id</td>
-            <td>@item.Cliente.Nombre</td>
-            <td>@item.Cliente.Direccion</td>
-            <td>@item.Cliente.Telefono</td>
-            <td>
-                <form class="table" asp-action="AsignarCadete" asp-controller="Pedido" method="post">
-                    <input type="hidden" id="idPedido" name="idPedido" value="@item.NumeroPedido">
-                    <select class="form-select" name="idCadete">
-                        <option selected value="0">Sin Cadete</option>
-                        @foreach (var cadete in Model.ListaCadetes)
-                        {
-                            if (cadete.ListadoPedidos.Exists(a => a.NumeroPedido == item.NumeroPedido))
+            <tr>
+                <th scope="row" class="table-success">@item.NumeroPedido</th>
+                <td>@item.Observaciones</td>
+                <td>@item.Estado</td>
+                <td>@item.Cliente.Id</td>
+                <td>@item.Cliente.Nombre</td>
+                <td>@item.Cliente.Direccion</td>
+                <td>@item.Cliente.Telefono</td>
+                <td>
+                    <form class="table" asp-action="AsignarCadete" asp-controller="Pedido" method="post">
+                        <input type="hidden" id="idPedido" name="idPedido" value="@item.NumeroPedido">
+                        <select class="form-select" name="idCadete">
+                            <option selected value="0">Sin Cadete</option>
+                            @foreach (var cadete in Model.listaCadetes)
                             {
-                                <option selected value="@cadete.Id">@cadete.Nombre (@cadete.ListadoPedidos.Count())</option>
+                                if (cadete.ListadoPedidos.Exists(a => a.NumeroPedido == item.NumeroPedido))
+                                {
+                                    <option selected value="@cadete.Id">@cadete.Nombre (@cadete.ListadoPedidos.Count())</option>
+                                }
+                                else
+                                {
+                                    <option value="@cadete.Id">@cadete.Nombre (@cadete.ListadoPedidos.Count())</option>
+                                }
                             }
-                            else
-                            {
-                                <option value="@cadete.Id">@cadete.Nombre (@cadete.ListadoPedidos.Count())</option>
-                            }
-                        }
-                    </select>
-                    <button type="submit" class="btn btn-sm btn-success">Asignar</button>
-                </form>
-            </td>
-            <td>
-                <a class="nav-link" asp-route-NumeroPedido="@item.NumeroPedido" asp-controller="Pedido" asp-action="modificarPedido">Modificar</a>
-                <a class="nav-link" asp-route-NumeroPedido="@item.NumeroPedido" asp-controller="Pedido" asp-action="eliminarPedido" onclick="return confirm('¿Seguro que desea eliminar este pedido?')">
-                    Eliminar
-                </a>
-            </td>
-        </tr>
+                        </select>
+                        <button type="submit" class="btn btn-sm btn-success">Asignar</button>
+                    </form>
+                </td>
+                <td>
+                    <a class="nav-link" asp-route-NumeroPedido="@item.NumeroPedido" asp-controller="Pedido" asp-action="modificarPedido">Modificar</a>
+                    <a class="nav-link" asp-route-NumeroPedido="@item.NumeroPedido" asp-controller="Pedido" asp-action="eliminarPedido" onclick="return confirm('¿Seguro que desea eliminar este pedido?')">
+                        Eliminar
+                    </a>
+                </td>
+            </tr>
         }
     </tbody>
 </table>
