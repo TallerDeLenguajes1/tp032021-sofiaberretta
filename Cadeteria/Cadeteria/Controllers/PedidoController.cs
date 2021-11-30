@@ -9,6 +9,7 @@ using AutoMapper;
 using Cadeteria.Models.ViewModels.Pedidos;
 using Cadeteria.Models.ViewModels.Cadete;
 using Microsoft.AspNetCore.Http;
+using System.Diagnostics;
 
 namespace Cadeteria.Controllers
 {
@@ -31,15 +32,22 @@ namespace Cadeteria.Controllers
         {
             if (HttpContext.Session.GetInt32("ID") != null)
             {
-                PedidosAltaViewModel pedidos = new PedidosAltaViewModel();
-
-                pedidos.Estados = new List<string>()
+                if (HttpContext.Session.GetInt32("Rol") == 1)
                 {
-                    "Pendiente",
-                    "Entregado"
-                };
+                    PedidosAltaViewModel pedidos = new PedidosAltaViewModel();
 
-                return View(pedidos);
+                    pedidos.Estados = new List<string>()
+                    {
+                        "Pendiente",
+                        "Entregado"
+                    };
+
+                    return View(pedidos);
+                }
+                else
+                {
+                    return RedirectToAction(nameof(MostrarPedidos));
+                }
             }
             else
             {
@@ -50,30 +58,40 @@ namespace Cadeteria.Controllers
 
         public IActionResult MostrarPedidos()
         {
-            List<Cadete> cadetes = repoCadete.getAllCadetes();
-            var cadetesVM = mapper.Map<List<CadeteViewModel>>(cadetes);
+            if (HttpContext.Session.GetInt32("ID") != null)
+            {
+                List<Cadete> cadetes = repoCadete.getAllCadetes();
+                var cadetesVM = mapper.Map<List<CadeteViewModel>>(cadetes);
 
-            List<Pedidos> pedidos = repoPedido.getAllPedidos();
-            var pedidosVM = mapper.Map<List<PedidosViewModel>>(pedidos);
+                List<Pedidos> pedidos = repoPedido.getAllPedidos();
+                var pedidosVM = mapper.Map<List<PedidosViewModel>>(pedidos);
 
-            var pedidoMostrarVM = new PedidosMostrarViewModel();
-            pedidoMostrarVM.listaCadetes = cadetesVM;
-            pedidoMostrarVM.listaPedidos = pedidosVM;
+                var pedidoMostrarVM = new PedidosMostrarViewModel();
+                pedidoMostrarVM.listaCadetes = cadetesVM;
+                pedidoMostrarVM.listaPedidos = pedidosVM;
 
-            return View(pedidoMostrarVM);
+                return View(pedidoMostrarVM);
+            }
+            else
+            {
+                return RedirectToAction("Index", "Usuario");
+            }
         }
 
         public IActionResult crearPedido(PedidosAltaViewModel pedido)
         {
             try
             {
-                Pedidos nuevoPedido = mapper.Map<Pedidos>(pedido);
-                
-                repoCliente.guardarCliente(nuevoPedido.Cliente);
+                if (ModelState.IsValid)
+                {
+                    Pedidos nuevoPedido = mapper.Map<Pedidos>(pedido);
 
-                nuevoPedido.Cliente.Id = repoCliente.getLastIDCliente();
+                    repoCliente.guardarCliente(nuevoPedido.Cliente);
 
-                repoPedido.guardarPedido(nuevoPedido);
+                    nuevoPedido.Cliente.Id = repoCliente.getLastIDCliente();
+
+                    repoPedido.guardarPedido(nuevoPedido);
+                }
 
             }
             catch (Exception ex)
@@ -95,14 +113,28 @@ namespace Cadeteria.Controllers
 
         public IActionResult eliminarPedido(int NumeroPedido)
         {
-            Pedidos pedidoAEliminar = repoPedido.getPedidoById(NumeroPedido);
-
-            if (pedidoAEliminar != null)
+            if (HttpContext.Session.GetInt32("ID") != null)
             {
-                repoPedido.borrarPedido(pedidoAEliminar);
-            }
+                if (HttpContext.Session.GetInt32("Rol") == 1)
+                {
+                    Pedidos pedidoAEliminar = repoPedido.getPedidoById(NumeroPedido);
 
-            return RedirectToAction(nameof(MostrarPedidos));
+                    if (pedidoAEliminar != null)
+                    {
+                        repoPedido.borrarPedido(pedidoAEliminar);
+                    }
+
+                    return RedirectToAction(nameof(MostrarPedidos));
+                }
+                else
+                {
+                    return RedirectToAction(nameof(Error));
+                }
+            }
+            else
+            {
+                return RedirectToAction("Index", "Usuario");
+            }
         }
 
         [HttpGet]
@@ -110,12 +142,19 @@ namespace Cadeteria.Controllers
         {
             if (HttpContext.Session.GetInt32("ID") != null)
             {
-                Pedidos pedidoAModificar = repoPedido.getPedidoById(NumeroPedido);
-
-                if (pedidoAModificar != null)
+                if (HttpContext.Session.GetInt32("Rol") == 1 || HttpContext.Session.GetInt32("Rol") == 2)
                 {
-                    var pedidoVM = mapper.Map<PedidosModificarViewModel>(pedidoAModificar);
-                    return View("ModificarPedido", pedidoVM);
+                    Pedidos pedidoAModificar = repoPedido.getPedidoById(NumeroPedido);
+
+                    if (pedidoAModificar != null)
+                    {
+                        var pedidoVM = mapper.Map<PedidosModificarViewModel>(pedidoAModificar);
+                        return View("ModificarPedido", pedidoVM);
+                    }
+                    else
+                    {
+                        return RedirectToAction(nameof(MostrarPedidos));
+                    }
                 }
                 else
                 {
@@ -194,5 +233,11 @@ namespace Cadeteria.Controllers
             
             _DB.GuardarCadete(_DB.Cadeteria.ListaCadetes);
         }*/
+
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
+        {
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
     }
 }

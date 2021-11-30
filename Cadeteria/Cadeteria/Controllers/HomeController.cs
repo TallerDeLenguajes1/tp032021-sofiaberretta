@@ -25,7 +25,14 @@ namespace Cadeteria.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            if (HttpContext.Session.GetInt32("ID") != null)
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Index", "Usuario");
+            }
         }
 
         public IActionResult Privacy()

@@ -15,6 +15,6 @@ namespace Cadeteria.Models.ViewModels.Usuario
 
         [Required(ErrorMessage = "Ingrese su contraseña")]
         [DataType(DataType.Password)]
-        public string Password { get; set; }
+        public string Contrasenia { get; set; }
     }
 }

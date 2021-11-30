@@ -9,6 +9,7 @@ namespace Cadeteria.Models.DB
     public interface IUsuarioDB
     {
         void guardarUsuario(Usuario usuario);
-        int getUsuarioById(string nombre, string pass);
+        int getUsuarioId(string nombre, string pass);
+        int getUsuarioRol(int idUsuario);
     }
 }

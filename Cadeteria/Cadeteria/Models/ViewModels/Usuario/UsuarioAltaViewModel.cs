@@ -13,16 +13,21 @@ namespace Cadeteria.Models.ViewModels.Usuario
         [Display(Name = "Nombre de Usuario")]
         public string Nombre { get; set; }
 
+        [Required(ErrorMessage = "Ingrese una direccion de correo valida")]
+        [EmailAddress]
+        [Display(Name = "Email")]
+        public string Email { get; set; }
+
         [Required(ErrorMessage = "Ingrese una contraseña")]
         [StringLength(15, ErrorMessage = "La {0} debe tener al menos {2} y como máximo {1} caracteres.", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "Contraseña")]
-        public string Password { get; set; }
+        public string Contrasenia { get; set; }
 
         [DataType(DataType.Password)]
         [Display(Name = "Confirmar contraseña")]
         [Compare("Password", ErrorMessage = "La contraseña no coincide con la confirmación.")]
-        public string ConfirmPassword { get; set; }
+        public string ConfirmarContrasenia { get; set; }
 
         public UsuarioAltaViewModel()
         {

@@ -7,21 +7,21 @@ namespace Cadeteria.Models.Clases
 {
     public class Usuario
     {
-        private string nombre;
-        private string password;
-
-        public Usuario(string nombre, string password)
-        {
-            Nombre = nombre;
-            Password = password;
-        }
-
+        int idUsuario;
+        string nombre;
+        string contrasenia;
+        string email;
+        string rol;
         public Usuario()
         {
 
         }
 
+
+        public int IdUsuario { get => idUsuario; set => idUsuario = value; }
         public string Nombre { get => nombre; set => nombre = value; }
-        public string Password { get => password; set => password = value; }
+        public string Contrasenia { get => contrasenia; set => contrasenia = value; }
+        public string Email { get => email; set => email = value; }
+        public string Rol { get => rol; set => rol = value; }
     }
 }

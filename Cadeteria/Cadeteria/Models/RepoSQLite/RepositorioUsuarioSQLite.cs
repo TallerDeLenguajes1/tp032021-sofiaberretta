@@ -23,12 +23,12 @@ namespace Cadeteria.Models.RepoSQLite
             using (SQLiteConnection conexion = new SQLiteConnection(connectionString))
             {
                 string sqlQuery = "INSERT INTO Usuarios (usuarioNombre, usuarioPassword)" +
-                                   "VALUES (@usuarioNombre, @usuarioPassword);";
+                                   "VALUES (@usuarioNombre, @usuarioContrasenia);";
 
                 using (SQLiteCommand command = new SQLiteCommand(sqlQuery, conexion))
                 {
                     command.Parameters.AddWithValue("@usuarioNombre", usuario.Nombre);
-                    command.Parameters.AddWithValue("@usuarioPassword", usuario.Password);
+                    command.Parameters.AddWithValue("@usuarioContrasenia", usuario.Contrasenia);
 
                     conexion.Open();
                     command.ExecuteNonQuery();
@@ -38,17 +38,17 @@ namespace Cadeteria.Models.RepoSQLite
             
         }
 
-        public int getUsuarioById(string nombre, string pass)
+        public int getUsuarioId(string nombre, string pass)
         {
             int usuarioID = 0;
             using (SQLiteConnection connection = new SQLiteConnection(connectionString))
             {
-                 string sqlQuery = "SELECT usuarioID FROM Usuarios WHERE usuarioNombre = @usuarioNombre AND usuarioPassword = @usuarioPassword;";
+                 string sqlQuery = "SELECT usuarioID FROM Usuarios WHERE usuarioNombre = @usuarioNombre AND usuarioPassword = @usuarioContrasenia;";
 
                  using (SQLiteCommand command = new SQLiteCommand(sqlQuery, connection))
                  {
                      command.Parameters.AddWithValue("@usuarioNombre", nombre);
-                     command.Parameters.AddWithValue("@usuarioPassword", pass);
+                     command.Parameters.AddWithValue("@usuarioContrasenia", pass);
                      connection.Open();
 
                      using (SQLiteDataReader dataReader = command.ExecuteReader())
@@ -61,6 +61,38 @@ namespace Cadeteria.Models.RepoSQLite
              }
             
             return usuarioID;
+        }
+
+        public int getUsuarioRol(int idUsuario)
+        {
+            int usuarioRol = 0;
+
+            try
+            {
+                using (SQLiteConnection connection = new SQLiteConnection(connectionString))
+                {
+                    string sqlQuery = "SELECT usuarioRol FROM Usuarios WHERE usuarioID = @idUsuario;";
+
+                    using (SQLiteCommand command = new SQLiteCommand(sqlQuery, connection))
+                    {
+                        command.Parameters.AddWithValue("@idUsuario", idUsuario);
+                        connection.Open();
+
+                        using (SQLiteDataReader dataReader = command.ExecuteReader())
+                        {
+                            dataReader.Read();
+                            usuarioRol = Convert.ToInt32(dataReader["usuarioRol"]);
+                            connection.Close();
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                var mensaje = "Mensaje de error: " + ex.Message;
+            }
+
+            return usuarioRol;
         }
     }
 }

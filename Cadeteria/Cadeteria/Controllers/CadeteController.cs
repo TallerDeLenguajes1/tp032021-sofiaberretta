@@ -8,6 +8,7 @@ using Cadeteria.Models;
 using AutoMapper;
 using Cadeteria.Models.ViewModels.Cadete;
 using Microsoft.AspNetCore.Http;
+using System.Diagnostics;
 
 namespace Cadeteria.Controllers
 {
@@ -29,7 +30,14 @@ namespace Cadeteria.Controllers
         {
             if (HttpContext.Session.GetInt32("ID") != null)
             {
-                return View(new CadeteAltaViewModel());
+                if (HttpContext.Session.GetInt32("Rol") == 1)
+                {
+                    return View(new CadeteAltaViewModel());
+                }
+                else
+                {
+                    return RedirectToAction(nameof(MostrarCadetes));
+                }
             }
             else
             {
@@ -39,15 +47,22 @@ namespace Cadeteria.Controllers
 
         public IActionResult MostrarCadetes()
         {
-            List<Cadete> listaCadetes = repoCadete.getAllCadetes();
-            var listaCadetesVM = mapper.Map<List<CadeteViewModel>>(listaCadetes);
-
-            CadeteMostrarViewModel mostrarCadetesVM = new()
+            if (HttpContext.Session.GetInt32("ID") != null)
             {
-                listaCadetes = listaCadetesVM
-            };
+                List<Cadete> listaCadetes = repoCadete.getAllCadetes();
+                var listaCadetesVM = mapper.Map<List<CadeteViewModel>>(listaCadetes);
 
-            return View(mostrarCadetesVM);
+                CadeteMostrarViewModel mostrarCadetesVM = new()
+                {
+                    listaCadetes = listaCadetesVM
+                };
+
+                return View(mostrarCadetesVM);
+            }
+            else
+            {
+                return RedirectToAction("Index", "Usuario");
+            }
         }
 
         [HttpPost]
@@ -83,14 +98,28 @@ namespace Cadeteria.Controllers
 
         public IActionResult eliminarCadete(int id) 
         {
-            Cadete cadeteAEliminar = repoCadete.getCadeteById(id);
-
-            if (cadeteAEliminar != null)
+            if (HttpContext.Session.GetInt32("ID") != null)
             {
-                repoCadete.borrarCadete(cadeteAEliminar);
-            }
+                if (HttpContext.Session.GetInt32("Rol") == 1)
+                {
+                    Cadete cadeteAEliminar = repoCadete.getCadeteById(id);
 
-            return RedirectToAction(nameof(MostrarCadetes));
+                    if (cadeteAEliminar != null)
+                    {
+                        repoCadete.borrarCadete(cadeteAEliminar);
+                    }
+
+                    return RedirectToAction(nameof(MostrarCadetes));
+                }
+                else
+                {
+                    return RedirectToAction(nameof(Error));
+                }
+            }
+            else
+            {
+                return RedirectToAction("Index", "Usuario");
+            }
         }
 
         [HttpGet]
@@ -98,17 +127,23 @@ namespace Cadeteria.Controllers
         {
             if (HttpContext.Session.GetInt32("ID") != null)
             {
-                Cadete cadeteAModificar = repoCadete.getCadeteById(id);
-
-
-                if (cadeteAModificar != null)
+                if (HttpContext.Session.GetInt32("Rol") == 1 || HttpContext.Session.GetInt32("Rol") == 2)
                 {
-                    var cadeteVM = mapper.Map<CadeteModificarViewModel>(cadeteAModificar);
-                    return View("ModificarCadete", cadeteVM);
+                    Cadete cadeteAModificar = repoCadete.getCadeteById(id);
+
+                    if (cadeteAModificar != null)
+                    {
+                        var cadeteVM = mapper.Map<CadeteModificarViewModel>(cadeteAModificar);
+                        return View("ModificarCadete", cadeteVM);
+                    }
+                    else
+                    {
+                        return RedirectToAction(nameof(MostrarCadetes));
+                    }
                 }
                 else
                 {
-                    return RedirectToAction(nameof(MostrarCadetes));
+                    return RedirectToAction(nameof(Error));
                 }
             }
             else
@@ -186,7 +221,11 @@ namespace Cadeteria.Controllers
                 return Redirect("ListarPedidos");
             }
         }*/
-
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
+        {
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
     }
 
 }

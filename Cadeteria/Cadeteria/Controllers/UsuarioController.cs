@@ -16,11 +16,11 @@ namespace Cadeteria.Controllers
 {
     public class UsuarioController : Controller
     {
-        private readonly ILogger<CadeteController> _logger;
+        private readonly ILogger<UsuarioController> _logger;
         private readonly IUsuarioDB repoUsuario;
         private readonly IMapper mapper;
 
-        public UsuarioController(ILogger<CadeteController> logger, IUsuarioDB repoUsuario, IMapper mapper)
+        public UsuarioController(ILogger<UsuarioController> logger, IUsuarioDB repoUsuario, IMapper mapper)
         {
             _logger = logger;
             this.repoUsuario = repoUsuario;
@@ -41,11 +41,13 @@ namespace Cadeteria.Controllers
                 if (ModelState.IsValid)
                 {
                     Usuario logInUsuario = mapper.Map<Usuario>(usuario);
-                    int usuarioID = repoUsuario.getUsuarioById(logInUsuario.Nombre, logInUsuario.Password);
+                    int usuarioID = repoUsuario.getUsuarioId(logInUsuario.Nombre, logInUsuario.Contrasenia);
+                    int usuarioRol = repoUsuario.getUsuarioRol(usuarioID);
 
                     if (usuarioID != 0)
                     {
                         HttpContext.Session.SetInt32("ID", usuarioID);
+                        HttpContext.Session.SetInt32("Rol", usuarioRol);
 
                         return RedirectToAction("Index", "Home");
                         
@@ -95,14 +97,15 @@ namespace Cadeteria.Controllers
             }
             catch (Exception ex)
             {
-                var mensaje = "Error message: " + ex.Message;
+                var mensaje = "Mensaje de error: " + ex.Message;
 
                 if (ex.InnerException != null)
                 {
-                    mensaje = mensaje + " Inner exception: " + ex.InnerException.Message;
+                    mensaje = mensaje + " Excepcion interna: " + ex.InnerException.Message;
                 }
 
-                mensaje = mensaje + " Stack trace: " + ex.StackTrace;
+                mensaje = mensaje + " Sucedio en: " + ex.StackTrace;
+
                 _logger.LogError(mensaje);
             }
 
