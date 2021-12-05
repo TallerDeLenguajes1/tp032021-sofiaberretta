@@ -1,8 +1,6 @@
 ﻿@using Cadeteria.Models.ViewModels.Usuario
 
-@{
-    ViewData["Title"] = "Inicio de Sesion";
-}
+@{ ViewData["Title"] = "Inicio de Sesion"; }
 @model UsuarioIndexViewModel
 
 <div class="container">
@@ -34,3 +32,7 @@
         </div>
     </div>
 </div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
