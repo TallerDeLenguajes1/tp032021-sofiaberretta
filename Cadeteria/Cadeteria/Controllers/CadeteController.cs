@@ -70,14 +70,19 @@ namespace Cadeteria.Controllers
         {
             try
             {
-                if (ModelState.IsValid)
+                if (HttpContext.Session.GetInt32("ID") != null)
                 {
-                    Cadete nuevoCadete = mapper.Map<Cadete>(cadete);
-                    repoCadete.guardarCadete(nuevoCadete);
+                    if (HttpContext.Session.GetInt32("Rol") == 1)
+                    {
+                        if (ModelState.IsValid)
+                        {
+                            Cadete nuevoCadete = mapper.Map<Cadete>(cadete);
+                            repoCadete.guardarCadete(nuevoCadete);
 
-                    return RedirectToAction(nameof(MostrarCadetes));
+                            return RedirectToAction(nameof(MostrarCadetes));
+                        }
+                    }
                 }
-                
             }
             catch (Exception ex)
             {
@@ -155,10 +160,16 @@ namespace Cadeteria.Controllers
         [HttpPost]
         public IActionResult cambiarDatosCadete(CadeteModificarViewModel cadete)
         {
-            if (ModelState.IsValid) // ERROR: da falso
+            if (HttpContext.Session.GetInt32("ID") != null)
             {
-                Cadete cadeteAModificar = mapper.Map<Cadete>(cadete);
-                repoCadete.modificarCadete(cadeteAModificar);
+                if (HttpContext.Session.GetInt32("Rol") == 1 || HttpContext.Session.GetInt32("Rol") == 2)
+                {
+                    if (ModelState.IsValid)
+                    {
+                        Cadete cadeteAModificar = mapper.Map<Cadete>(cadete);
+                        repoCadete.modificarCadete(cadeteAModificar);
+                    }
+                }
             }
 
             return RedirectToAction(nameof(MostrarCadetes));

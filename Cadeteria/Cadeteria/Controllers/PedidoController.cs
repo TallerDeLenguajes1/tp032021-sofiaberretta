@@ -82,17 +82,22 @@ namespace Cadeteria.Controllers
         {
             try
             {
-                if (ModelState.IsValid)
+                if (HttpContext.Session.GetInt32("ID") != null)
                 {
-                    Pedidos nuevoPedido = mapper.Map<Pedidos>(pedido);
+                    if (HttpContext.Session.GetInt32("Rol") == 1)
+                    {
+                        if (ModelState.IsValid)
+                        {
+                            Pedidos nuevoPedido = mapper.Map<Pedidos>(pedido);
 
-                    repoCliente.guardarCliente(nuevoPedido.Cliente);
+                            repoCliente.guardarCliente(nuevoPedido.Cliente);
 
-                    nuevoPedido.Cliente.Id = repoCliente.getLastIDCliente();
+                            nuevoPedido.Cliente.Id = repoCliente.getLastIDCliente();
 
-                    repoPedido.guardarPedido(nuevoPedido);
+                            repoPedido.guardarPedido(nuevoPedido);
+                        }
+                    }
                 }
-
             }
             catch (Exception ex)
             {
@@ -172,12 +177,17 @@ namespace Cadeteria.Controllers
         {
             try
             {
-                if (ModelState.IsValid)
+                if (HttpContext.Session.GetInt32("ID") != null)
                 {
-                    Pedidos pedidoAModificar = mapper.Map<Pedidos>(pedido);
-                    repoPedido.modificarPedido(pedidoAModificar);
+                    if (HttpContext.Session.GetInt32("Rol") == 1 || HttpContext.Session.GetInt32("Rol") == 2)
+                    {
+                        if (ModelState.IsValid)
+                        {
+                            Pedidos pedidoAModificar = mapper.Map<Pedidos>(pedido);
+                            repoPedido.modificarPedido(pedidoAModificar);
+                        }
+                    }
                 }
-
             }
             catch (Exception ex)
             {
