@@ -17,35 +17,37 @@
             <th scope="col">Nombre</th>
             <th scope="col">Direccion</th>
             <th scope="col">Telefono</th>
-            <th scope="col"></th>
+            <!-- <th scope="col"></th> -->
             <th scope="col"></th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model.listaCadetes)
         {
-            <tr>
-                <th scope="row" class="table-primary">@item.Id</th>
-                <td>@item.Nombre</td>
-                <td>@item.Direccion</td>
-                <td>@item.Telefono</td>
-                @if (item.ListadoPedidos != null)
-                {
-                    <td>
-                        <a class="nav-link" asp-route-id="@item.Id" asp-action="listarPedidos">Pedidos @item.ListadoPedidos.Count() </a>
-                    </td>
-                }
-                else
-                {
-                    <td>Sin pedidos</td>
-                }
+        <tr>
+            <th scope="row" class="table-primary">@item.Id</th>
+            <td>@item.Nombre</td>
+            <td>@item.Direccion</td>
+            <td>@item.Telefono</td>
+            <!--
+            @if (item.ListadoPedidos != null)
+            {
                 <td>
-                    <a class="nav-link" asp-route-id="@item.Id" asp-controller="Cadete" asp-action="modificarCadete">Modificar</a>
-                    <a class="nav-link" asp-route-id="@item.Id" asp-controller="Cadete" asp-action="eliminarCadete" onclick="return confirm('¿Seguro que desea eliminar al cadete @item.Nombre?')">
-                        Eliminar
-                    </a>
+                    <a class="nav-link" asp-route-id="@item.Id" asp-action="listarPedidos">Pedidos @item.ListadoPedidos.Count() </a>
                 </td>
-            </tr>
+            }
+            else
+            {
+                <td>Sin pedidos</td>
+            }
+            -->
+            <td>
+                <a class="nav-link" asp-route-id="@item.Id" asp-controller="Cadete" asp-action="modificarCadete">Modificar</a>
+                <a class="nav-link" asp-route-id="@item.Id" asp-controller="Cadete" asp-action="eliminarCadete" onclick="return confirm('¿Seguro que desea eliminar al cadete @item.Nombre?')">
+                    Eliminar
+                </a>
+            </td>
+        </tr>
         }
     </tbody>
 </table>

@@ -21,12 +21,12 @@ namespace Cadeteria.Models.ViewModels.Usuario
         [Required(ErrorMessage = "Ingrese una contraseña")]
         [StringLength(15, ErrorMessage = "La {0} debe tener al menos {2} y como máximo {1} caracteres.", MinimumLength = 6)]
         [DataType(DataType.Password)]
-        [Display(Name = "Contraseña")]
+        [Display(Name = "Contrasenia")]
         public string Contrasenia { get; set; }
 
         [DataType(DataType.Password)]
         [Display(Name = "Confirmar contraseña")]
-        [Compare("Password", ErrorMessage = "La contraseña no coincide con la confirmación.")]
+        [Compare("Contrasenia", ErrorMessage = "La contraseña no coincide con la confirmación.")]
         public string ConfirmarContrasenia { get; set; }
 
         public UsuarioAltaViewModel()

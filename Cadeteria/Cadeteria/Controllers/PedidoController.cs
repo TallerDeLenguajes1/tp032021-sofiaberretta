@@ -32,22 +32,16 @@ namespace Cadeteria.Controllers
         {
             if (HttpContext.Session.GetInt32("ID") != null)
             {
-                if (HttpContext.Session.GetInt32("Rol") == 1)
-                {
-                    PedidosAltaViewModel pedidos = new PedidosAltaViewModel();
+                PedidosAltaViewModel pedidos = new PedidosAltaViewModel();
 
-                    pedidos.Estados = new List<string>()
-                    {
-                        "Pendiente",
-                        "Entregado"
-                    };
-
-                    return View(pedidos);
-                }
-                else
+                pedidos.Estados = new List<string>()
                 {
-                    return RedirectToAction(nameof(MostrarPedidos));
-                }
+                    "Pendiente",
+                    "Entregado"
+                };
+                
+                return View(pedidos);
+
             }
             else
             {
@@ -60,17 +54,24 @@ namespace Cadeteria.Controllers
         {
             if (HttpContext.Session.GetInt32("ID") != null)
             {
-                List<Cadete> cadetes = repoCadete.getAllCadetes();
-                var cadetesVM = mapper.Map<List<CadeteViewModel>>(cadetes);
+                if (HttpContext.Session.GetInt32("Rol") == 1 || HttpContext.Session.GetInt32("Rol") == 2)
+                {
+                    List<Cadete> cadetes = repoCadete.getAllCadetes();
+                    var cadetesVM = mapper.Map<List<CadeteViewModel>>(cadetes);
 
-                List<Pedidos> pedidos = repoPedido.getAllPedidos();
-                var pedidosVM = mapper.Map<List<PedidosViewModel>>(pedidos);
+                    List<Pedidos> pedidos = repoPedido.getAllPedidos();
+                    var pedidosVM = mapper.Map<List<PedidosViewModel>>(pedidos);
 
-                var pedidoMostrarVM = new PedidosMostrarViewModel();
-                pedidoMostrarVM.listaCadetes = cadetesVM;
-                pedidoMostrarVM.listaPedidos = pedidosVM;
+                    var pedidoMostrarVM = new PedidosMostrarViewModel();
+                    pedidoMostrarVM.listaCadetes = cadetesVM;
+                    pedidoMostrarVM.listaPedidos = pedidosVM;
 
-                return View(pedidoMostrarVM);
+                    return View(pedidoMostrarVM);
+                }
+                else
+                {
+                    return RedirectToAction(nameof(Error));
+                }
             }
             else
             {
@@ -84,18 +85,15 @@ namespace Cadeteria.Controllers
             {
                 if (HttpContext.Session.GetInt32("ID") != null)
                 {
-                    if (HttpContext.Session.GetInt32("Rol") == 1)
+                    if (ModelState.IsValid)
                     {
-                        if (ModelState.IsValid)
-                        {
-                            Pedidos nuevoPedido = mapper.Map<Pedidos>(pedido);
+                        Pedidos nuevoPedido = mapper.Map<Pedidos>(pedido);
 
-                            repoCliente.guardarCliente(nuevoPedido.Cliente);
+                        repoCliente.guardarCliente(nuevoPedido.Cliente);
 
-                            nuevoPedido.Cliente.Id = repoCliente.getLastIDCliente();
+                        nuevoPedido.Cliente.Id = repoCliente.getLastIDCliente();
 
-                            repoPedido.guardarPedido(nuevoPedido);
-                        }
+                        repoPedido.guardarPedido(nuevoPedido);
                     }
                 }
             }

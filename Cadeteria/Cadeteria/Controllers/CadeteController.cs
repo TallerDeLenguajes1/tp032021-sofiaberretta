@@ -36,7 +36,7 @@ namespace Cadeteria.Controllers
                 }
                 else
                 {
-                    return RedirectToAction(nameof(MostrarCadetes));
+                    return RedirectToAction(nameof(Error));
                 }
             }
             else

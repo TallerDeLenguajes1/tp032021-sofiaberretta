@@ -14,16 +14,16 @@
             <input asp-for="Observaciones" class="form-control" value="@Model.Observaciones">
         </div>
         <div class="col-md-6">
-            <label asp-for="NombreCliente" class="form-label"></label>
-            <input asp-for="NombreCliente" class="form-control" value="@Model.NombreCliente">
+            <label asp-for="Nombre" class="form-label"></label>
+            <input asp-for="Nombre" class="form-control" value="@Model.Nombre">
         </div>
         <div class="col-md-6">
             <label for="direc" class="form-label">Direccion cliente</label>
-            <input type="text" class="form-control" id="direc" name="direcC" value="@Model.DireccionCliente" required>
+            <input type="text" class="form-control" id="direc" name="direcC" value="@Model.Direccion" required>
         </div>
         <div class="col-md-6">
             <label for="tel" class="form-label">Telefono cliente</label>
-            <input type="text" class="form-control" id="tel" name="telC" placeholder="3815123123" value="@Model.TelefonoCliente" required>
+            <input type="text" class="form-control" id="tel" name="telC" placeholder="3815123123" value="@Model.Telefono" required>
         </div>
         <div class="col-md-4">
             <label for="estado" class="form-label">Estado pedido</label>

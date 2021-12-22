@@ -20,7 +20,7 @@
             <th scope="col">Nombre Cliente</th>
             <th scope="col">Direccion Cliente</th>
             <th scope="col">Telefono Cliente</th>
-            <th scope="col">Cadete a cargo</th>
+            <!-- <th scope="col">Cadete a cargo</th> -->
             <th scope="col"></th>
         </tr>
     </thead>
@@ -35,7 +35,7 @@
                 <td>@item.Cliente.Nombre</td>
                 <td>@item.Cliente.Direccion</td>
                 <td>@item.Cliente.Telefono</td>
-                <td>
+                <!-- <td>
                     <form class="table" asp-action="AsignarCadete" asp-controller="Pedido" method="post">
                         <input type="hidden" id="idPedido" name="idPedido" value="@item.NumeroPedido">
                         <select class="form-select" name="idCadete">
@@ -54,7 +54,7 @@
                         </select>
                         <button type="submit" class="btn btn-sm btn-success">Asignar</button>
                     </form>
-                </td>
+                </td> -->
                 <td>
                     <a class="nav-link" asp-route-NumeroPedido="@item.NumeroPedido" asp-controller="Pedido" asp-action="modificarPedido">Modificar</a>
                     <a class="nav-link" asp-route-NumeroPedido="@item.NumeroPedido" asp-controller="Pedido" asp-action="eliminarPedido" onclick="return confirm('¿Seguro que desea eliminar este pedido?')">
